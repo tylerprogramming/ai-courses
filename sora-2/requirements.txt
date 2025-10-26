@@ -1,0 +1,16 @@
+# OpenAI SDK for Sora video generation
+openai
+
+# Environment variable management
+python-dotenv
+
+# HTTP requests (for remix endpoint)
+requests
+
+# FastAPI and server dependencies
+fastapi
+uvicorn[standard]
+pydantic
+
+# Optional: For async support
+httpx
