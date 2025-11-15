@@ -1,0 +1,11 @@
+# HTTP requests
+requests
+
+# Environment variable management
+python-dotenv
+
+# FastAPI and server dependencies (for API wrapper)
+fastapi
+uvicorn[standard]
+pydantic
+crewai
