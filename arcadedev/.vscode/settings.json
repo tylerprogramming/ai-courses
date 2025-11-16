@@ -1,0 +1,10 @@
+{
+  "python.defaultInterpreterPath": "/Users/tylerreed/courses/arcadedev/venv/bin/python3",
+  "python.terminal.activateEnvironment": true,
+  "python.analysis.extraPaths": [
+    "/Users/tylerreed/courses/arcadedev/venv/lib/python3.12/site-packages"
+  ],
+  "cursorpyright.analysis.extraPaths": [
+    "/Users/tylerreed/courses/arcadedev/venv/lib/python3.12/site-packages"
+  ]
+}
