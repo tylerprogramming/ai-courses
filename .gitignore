@@ -1,2 +1,5 @@
 .env
 .venv-sora
+__pycache__/
+.claude
+venv
