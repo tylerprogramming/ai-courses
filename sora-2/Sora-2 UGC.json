@@ -1,0 +1,417 @@
+{
+  "name": "Sora 2 UGC",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Step 2\n### Poll status until complete",
+        "height": 432,
+        "width": 448,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -208
+      ],
+      "id": "38458a93-287f-477e-b129-93f20f0a9246",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Step 1\n### Search online and create video with Sora 2",
+        "height": 432,
+        "width": 656,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -992,
+        -208
+      ],
+      "id": "8914dcb6-07a7-4f05-b414-fbf3216d3b22",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a helpful assistant.  \n\nTake the information given, and give the correct parameters to create a video.\n\nHere are defaults IF none are given:\n\nsize: 1280x720\nseconds: 4\nprompt: \"A neon-lit drone shot over a rainy sci-fi street\"\nmodel: sora-2\n\nOtherwise, fill in what is given from chat."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -768,
+        -128
+      ],
+      "id": "31d44578-5cc1-42d0-be04-cfa8623947ff",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.1",
+          "mode": "list",
+          "cachedResultName": "gpt-5.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -928,
+        80
+      ],
+      "id": "ad3f859c-75b0-4545-b1b4-e5ff3ba27b69",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "marROkDq8FtIIcmK",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1168,
+        -128
+      ],
+      "id": "e19ee343-81c4-49af-b349-2e0023b4408f",
+      "name": "When chat message received",
+      "webhookId": "3d4db539-1471-4f9d-ab3d-50a938c87176"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/videos",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "sora-2"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', ``, 'string') }}"
+            },
+            {
+              "name": "seconds",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `If none is given, the default value is 4.  The only values can be 4, 8 or 12 `, 'string') }}"
+            },
+            {
+              "name": "size",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters3_Value', `If none is given, the default value should be 1280x720.  Supported values are: '720x1280', '1280x720', '1024x1792', and '1792x1024`, 'string') }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        -624,
+        80
+      ],
+      "id": "2972fc59-ab6c-4558-8e52-d5f796d97fe7",
+      "name": "Create Sora 2 Video",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "3yGwZpm7dkAlncww",
+          "name": "OpenAI Bearer"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"video_id\": \"videoid123\",\n    \"prompt\": \"the prompt used\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -464,
+        80
+      ],
+      "id": "2eca3400-0db7-4846-b4cb-04adc13d16c8",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        400,
+        -128
+      ],
+      "id": "c8e5dcc6-779e-4e17-b60f-66e77c0160e2",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "EaQRNin7iryown3y",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Step 3\n### Upload to Google Drive",
+        "height": 432,
+        "width": 448
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        144,
+        -208
+      ],
+      "id": "7d5fcf7b-0788-4669-a110-064190dca451",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -256,
+        -128
+      ],
+      "id": "acbfe4e8-311d-4d72-b951-f23bc9c5fa35",
+      "name": "Wait 30s",
+      "webhookId": "08c75baa-9eb1-42af-822e-6b068a0fc867"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.openai.com/v1/videos/{{ $json.output.video_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -256,
+        0
+      ],
+      "id": "c06898aa-7f87-489b-9388-de4bbedf07ed",
+      "name": "Poll Status",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "3yGwZpm7dkAlncww",
+          "name": "OpenAI Bearer"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.openai.com/v1/videos/{{ $json.id }}/content",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        -128
+      ],
+      "id": "83c19c65-478d-46b5-ad4a-0a44d6a161d0",
+      "name": "Download Sora2 Video",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "3yGwZpm7dkAlncww",
+          "name": "OpenAI Bearer"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "39c61a21-1b4a-4bd0-9ff1-3821efaf83fd",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -32,
+        0
+      ],
+      "id": "789bf5b2-da73-411e-aa21-1d66f70dd389",
+      "name": "IF"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Sora 2 Video": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Poll Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30s": {
+      "main": [
+        [
+          {
+            "node": "Poll Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Poll Status": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Sora2 Video": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Download Sora2 Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 30s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3c34f207-23a1-4d30-ae85-22121aa67d74",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "109e32fa950741cab379b6d825599a810f59f364361f13a3a9b822a29abb36cd"
+  },
+  "id": "XadFwJ8NiuK4OYa8",
+  "tags": [
+    {
+      "updatedAt": "2025-08-25T16:53:41.059Z",
+      "createdAt": "2025-08-25T16:53:41.059Z",
+      "id": "EBygcOYQsXg5BYAm",
+      "name": "social media"
+    }
+  ]
+}
