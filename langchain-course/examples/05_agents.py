@@ -4,15 +4,14 @@ Topic 5: Agents (ReAct Framework)
 Agents use LLMs to reason about what to do, execute actions,
 and continue until the task is complete.
 
-ReAct = Reasoning + Acting (recommended approach in 2025)
+ReAct = Reasoning + Acting
 """
 
 import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_react_agent, AgentExecutor
+from langchain.agents import create_agent
 from langchain_core.tools import tool
-from langchain_core.prompts import PromptTemplate
 
 load_dotenv()
 
@@ -37,11 +36,9 @@ def multiply(a: float, b: float) -> float:
 llm = ChatOpenAI(model="gpt-4o", temperature=0)  # Use GPT-4 for better reasoning
 tools = [get_word_length, multiply]
 
-# ReAct prompt template
-react_prompt = PromptTemplate.from_template("""
-Answer the following questions as best you can. You have access to the following tools:
-
-{tools}
+# System prompt for the agent (simple string, not a template)
+system_prompt = """You are a helpful assistant that can use tools to answer questions.
+Think step by step and use the available tools when needed.
 
 Use the following format:
 
@@ -55,35 +52,18 @@ Thought: I now know the final answer
 Final Answer: the final answer to the original input question
 
 Begin!
+"""
 
-Question: {input}
-Thought: {agent_scratchpad}
-""")
+# Create agent using the modern create_agent function
+agent = create_agent(model=llm, tools=tools, system_prompt=system_prompt)
 
-# Create ReAct agent
-agent = create_react_agent(llm, tools, react_prompt)
-
-# Create agent executor (handles the execution loop)
-agent_executor = AgentExecutor(
-    agent=agent,
-    tools=tools,
-    verbose=True,  # Shows reasoning steps
-    handle_parsing_errors=True,
-    max_iterations=5
-)
-
-print("Example: ReAct Agent")
+print("Example: Agent with Tools")
 print("=" * 60)
 
 question = "What is the length of the word 'LangChain' multiplied by 2?"
 print(f"Question: {question}\n")
 
-result = agent_executor.invoke({"input": question})
+result = agent.invoke({"messages": [("user", question)]})
 
 print("\n" + "=" * 60)
-print(f"Final Answer: {result['output']}")
-
-print("\n✓ Agents reason and act dynamically")
-print("✓ Use create_react_agent() (modern approach)")
-print("✓ For complex multi-agent systems, use LangGraph")
-print("✓ Next: 06_memory.py")
+print(f"Final Answer: {result['messages'][-1].content}")

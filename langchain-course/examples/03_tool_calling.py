@@ -70,6 +70,3 @@ if response.tool_calls:
             result = calculate.invoke(tool_call['args'])
 
         print(f"Result: {result}\n")
-
-print("✓ Tools enable LLMs to interact with external systems")
-print("✓ Next: 04_prompts_templates.py")

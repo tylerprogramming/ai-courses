@@ -71,7 +71,3 @@ test_words = ["fast", "bright", "loud"]
 for word in test_words:
     result = chain.invoke({"input": word})
     print(f"{word} → {result}")
-
-print("\n✓ Use ChatPromptTemplate for structured prompts")
-print("✓ Few-shot learning teaches by example")
-print("✓ Next: 05_agents.py")

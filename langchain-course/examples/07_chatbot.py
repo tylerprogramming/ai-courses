@@ -15,10 +15,8 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 
 load_dotenv()
 
-
-# ============================================================================
-# Complete Chatbot with Memory and Streaming
-# ============================================================================
+# Disable LangSmith tracking to avoid warnings
+os.environ["LANGCHAIN_TRACING_V2"] = "false"
 
 # Define chatbot personality via system prompt
 prompt = ChatPromptTemplate.from_messages([
@@ -46,43 +44,31 @@ chatbot = RunnableWithMessageHistory(
     history_messages_key="chat_history"
 )
 
-print("Example: Production Chatbot")
+print("Interactive Chatbot with Memory & Streaming")
 print("=" * 60)
+print("Type your messages and chat with the AI.")
+print("Type 'quit', 'exit', or 'bye' to end the conversation.\n")
 
-session_id = "demo_session"
+session_id = "interactive_session"
 
-# Conversation function
-def chat(message: str, stream=False):
-    print(f"\nYou: {message}")
+# Interactive chat loop
+while True:
+    user_input = input("You: ").strip()
+
+    if not user_input:
+        continue
+
+    if user_input.lower() in ['quit', 'exit', 'bye']:
+        print("\nBot: Goodbye! Have a great day!")
+        break
+
     print("Bot: ", end="", flush=True)
 
-    if stream:
-        # Stream response
-        for chunk in chatbot.stream(
-            {"input": message},
-            config={"configurable": {"session_id": session_id}}
-        ):
-            print(chunk, end="", flush=True)
-        print()
-    else:
-        # Regular response
-        response = chatbot.invoke(
-            {"input": message},
-            config={"configurable": {"session_id": session_id}}
-        )
-        print(response)
+    # Stream the response
+    for chunk in chatbot.stream(
+        {"input": user_input},
+        config={"configurable": {"session_id": session_id}}
+    ):
+        print(chunk, end="", flush=True)
 
-# Have a conversation
-chat("Hi! My name is Alex.")
-chat("I'm learning about LangChain and RAG systems.")
-chat("What's my name?")  # Test memory
-
-# Demo streaming
-print("\n" + "-" * 60)
-print("Streaming example:")
-print("-" * 60)
-chat("Tell me a short story about AI in one paragraph.", stream=True)
-
-print("\n\n✓ Chatbot = Memory + Personality + Streaming")
-print("✓ For tool access, combine with agents (05_agents.py)")
-print("✓ Next: 08_document_loaders.py for RAG!")
+    print()  # New line after response

@@ -17,11 +17,6 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 
 load_dotenv()
 
-
-# ============================================================================
-# Example: Conversation Memory with LCEL
-# ============================================================================
-
 # Create prompt with message history placeholder
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant. Remember details from the conversation."),
@@ -76,8 +71,3 @@ response3 = chatbot.invoke(
     config={"configurable": {"session_id": session_id}}
 )
 print(f"AI: {response3}")
-
-print("\n✓ Memory enables contextual conversations")
-print("✓ Use RunnableWithMessageHistory (modern approach)")
-print("✓ Session IDs isolate different conversations")
-print("✓ Next: 07_chatbot.py")

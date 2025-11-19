@@ -73,44 +73,13 @@ print("\n\nExample 3: WebBaseLoader")
 print("-" * 60)
 
 try:
-    loader = WebBaseLoader("https://example.com")
+    loader = WebBaseLoader("https://docs.langchain.com/oss/python/langchain/overview")
     documents = loader.load()
     print(f"Loaded {len(documents)} document(s) from web")
     print(f"First 100 chars: {documents[0].page_content[:100]}...")
 except Exception as e:
     print(f"(Skipped - requires internet: {e})")
 
-
-# ============================================================================
-# Other Common Loaders (commented)
-# ============================================================================
-
-print("\n\nOther Loaders Available:")
-print("-" * 60)
-print("""
-# PDF
-from langchain_community.document_loaders import PyPDFLoader
-loader = PyPDFLoader("document.pdf")
-pages = loader.load()  # Each page = separate document
-
-# Web scraping
-from langchain_community.document_loaders import WebBaseLoader
-loader = WebBaseLoader("https://example.com")
-
-# Google Drive
-from langchain_community.document_loaders import GoogleDriveLoader
-
-# Notion
-from langchain_community.document_loaders import NotionDirectoryLoader
-
-# And 200+ more!
-""")
-
 # Cleanup
-os.remove("sample_document.txt")
-os.remove("sample_data.csv")
-
-print("\n✓ Document loaders convert sources → Documents")
-print("✓ All have same interface: .load() or .lazy_load()")
-print("✓ Document = page_content + metadata")
-print("✓ Next: 09_text_splitters.py")
+# os.remove("sample_document.txt")
+# os.remove("sample_data.csv")

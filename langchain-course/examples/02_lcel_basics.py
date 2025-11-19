@@ -41,8 +41,5 @@ print("\n\nExample 2: Streaming")
 print("-" * 60)
 print("Streaming response: ", end="", flush=True)
 
-for chunk in chain.stream({"request": "Tell me a one-sentence joke about AI."}):
+for chunk in chain.stream({"question": "Tell me a three-sentence joke about AI."}):
     print(chunk, end="", flush=True)
-
-print("\n\n✓ LCEL chains are: clean, composable, and support streaming!")
-print("✓ Next: 03_tool_calling.py")

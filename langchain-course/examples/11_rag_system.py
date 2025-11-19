@@ -77,7 +77,7 @@ vector_store = FAISS.from_documents(splits, embeddings)
 print(f"✓ Indexed in FAISS")
 
 # 3. Create retriever
-retriever = vector_store.as_retriever(search_kwargs={"k": 3})  # Top 3 chunks
+retriever = vector_store.as_retriever(search_kwargs={"k": 4})  # Top 3 chunks
 print(f"✓ Created retriever")
 
 # 4. Create RAG prompt
@@ -140,46 +140,17 @@ for question in questions:
     print("-" * 60)
 
 
-# ============================================================================
-# RAG Architecture Summary
-# ============================================================================
+# =======
+# INDEXING (one-time):
+#   Documents → Splitter → Chunks → Embeddings → Vector Store
 
-print("\n\nRAG Architecture:")
-print("=" * 60)
-print("""
-INDEXING (one-time):
-  Documents → Splitter → Chunks → Embeddings → Vector Store
+# RETRIEVAL-GENERATION (per query):
+#   Question → Embedding → Similarity Search → Top K Chunks
+#   Chunks + Question → LLM → Answer
 
-RETRIEVAL-GENERATION (per query):
-  Question → Embedding → Similarity Search → Top K Chunks
-  Chunks + Question → LLM → Answer
-
-BENEFITS:
-✓ Access to private/recent data
-✓ Grounded answers (not hallucinated)
-✓ Source attribution
-✓ Up-to-date without retraining
-✓ 70% accuracy improvement for domain-specific queries
-""")
-
-print("\n" + "=" * 60)
-print("🎉 CRASH COURSE COMPLETE! 🎉")
-print("=" * 60)
-print("""
-You've learned:
-✓ Setup & LCEL (modern chains)
-✓ Tools & Prompts
-✓ Agents (ReAct)
-✓ Memory & Chatbots
-✓ Document loading & splitting
-✓ Vector stores & embeddings
-✓ Complete RAG system
-
-Next steps:
-→ Build your own RAG system with your documents
-→ Explore LangGraph for multi-agent systems
-→ Use LangSmith for monitoring and debugging
-→ Check out docs.langchain.com for advanced topics
-
-Happy building! 🚀
-""")
+# BENEFITS:
+# ✓ Access to private/recent data
+# ✓ Grounded answers (not hallucinated)
+# ✓ Source attribution
+# ✓ Up-to-date without retraining
+# ✓ 70% accuracy improvement for domain-specific queries

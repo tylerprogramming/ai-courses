@@ -27,13 +27,9 @@ llm = ChatOpenAI(
     temperature=0.7,
 )
 
-print("Making first LLM call...\n")
-
 # Simple invoke
 response = llm.invoke("Explain LangChain in one sentence.")
 print(f"Response: {response.content}\n")
 
 # Response includes metadata
 print(f"Tokens used: {response.response_metadata.get('token_usage', {}).get('total_tokens', 'N/A')}")
-
-print("\n✓ Setup complete! Move to 02_lcel_basics.py")

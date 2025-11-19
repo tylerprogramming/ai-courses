@@ -7,6 +7,14 @@ Text splitters break large documents into chunks for:
 - Improving RAG retrieval accuracy
 
 Use RecursiveCharacterTextSplitter (recommended)
+
+General purpose:     500-1000 characters
+Q&A systems:         500-1000 characters
+Book summarization:  1000-2000 characters
+Technical docs:      500-800 characters
+Code documentation:  300-600 characters
+
+Overlap: 10-20% of chunk_size (e.g., 100-200 for size=1000)
 """
 
 import os
@@ -68,44 +76,3 @@ for i, chunk in enumerate(chunks, 1):
     print(chunk.page_content[:150] + "...\n")
     print(f"Metadata: {chunk.metadata}\n")
     print("-" * 60)
-
-
-# ============================================================================
-# How RecursiveCharacterTextSplitter Works
-# ============================================================================
-
-print("\nHow it works:")
-print("-" * 60)
-print("""
-RecursiveCharacterTextSplitter tries separators in order:
-1. "\\n\\n" (paragraphs) - try first
-2. "\\n" (lines) - if chunks still too large
-3. " " (words) - if still too large
-4. "" (characters) - last resort
-
-This preserves semantic meaning better than simple character splitting!
-""")
-
-
-# ============================================================================
-# Chunk Size Guidelines (2025)
-# ============================================================================
-
-print("\nChunk Size Guidelines:")
-print("-" * 60)
-print("""
-General purpose:     500-1000 characters
-Q&A systems:         500-1000 characters
-Book summarization:  1000-2000 characters
-Technical docs:      500-800 characters
-Code documentation:  300-600 characters
-
-Overlap: 10-20% of chunk_size (e.g., 100-200 for size=1000)
-
-Test with your data to find optimal settings!
-""")
-
-print("\n✓ Use RecursiveCharacterTextSplitter (default)")
-print("✓ Typical: chunk_size=1000, overlap=200")
-print("✓ Balance precision vs. context")
-print("✓ Next: 10_vector_stores.py")

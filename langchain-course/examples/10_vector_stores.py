@@ -6,6 +6,14 @@ Essential for RAG (Retrieval Augmented Generation).
 
 Embeddings = numerical representations of text that capture meaning
 Similar texts have similar embeddings
+
+FAISS: Fast, local, in-memory (good for prototyping)
+Chroma: Persistent, local (good for small-medium projects)
+Pinecone: Cloud, managed (good for production/scale)
+Weaviate: Cloud or self-hosted (enterprise)
+Qdrant: Cloud or self-hosted (high performance)
+
+LangChain provides same API across all stores - easy to swap!
 """
 
 import os
@@ -104,27 +112,5 @@ test_results = loaded_store.similarity_search("programming languages", k=1)
 print(f"✓ Test query: {test_results[0].page_content}")
 
 # Cleanup
-import shutil
-shutil.rmtree("my_vector_store")
-
-
-# ============================================================================
-# Vector Store Options
-# ============================================================================
-
-print("\n\nVector Store Options:")
-print("-" * 60)
-print("""
-FAISS: Fast, local, in-memory (good for prototyping)
-Chroma: Persistent, local (good for small-medium projects)
-Pinecone: Cloud, managed (good for production/scale)
-Weaviate: Cloud or self-hosted (enterprise)
-Qdrant: Cloud or self-hosted (high performance)
-
-LangChain provides same API across all stores - easy to swap!
-""")
-
-print("\n✓ Embeddings capture semantic meaning as vectors")
-print("✓ Vector stores enable fast similarity search")
-print("✓ Essential for RAG systems")
-print("✓ Next: 11_rag_system.py - putting it all together!")
+# import shutil
+# shutil.rmtree("my_vector_store")
