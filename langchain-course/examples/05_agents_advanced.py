@@ -21,19 +21,10 @@ from pydantic import BaseModel, Field
 
 load_dotenv()
 
-
-# ============================================================================
-# 1. Define Context Schema
-# ============================================================================
-
 class Context(TypedDict):
     """Runtime context for the agent"""
     user_id: str
     session_id: str
-
-# ============================================================================
-# 2. Define Tools with Context Access
-# ============================================================================
 
 @tool
 def get_user_location(user_id: str) -> str:
@@ -76,20 +67,12 @@ def create_recommendation(user_id: str, recommendation: str) -> str:
 
 tools = [get_user_location, get_weather_for_location, create_recommendation]
 
-# ============================================================================
-# 3. Define Structured Output
-# ============================================================================
-
 class ResponseFormat(BaseModel):
     """Structured response format"""
     summary: str = Field(description="Brief summary of the interaction")
     action_taken: str = Field(description="What action was performed")
     follow_up_needed: bool = Field(description="Whether follow-up is needed")
 
-
-# ============================================================================
-# 4. Create Advanced Agent
-# ============================================================================
 
 model = init_chat_model("gpt-4o-mini", temperature=0)
 
@@ -113,10 +96,6 @@ agent = create_agent(
     checkpointer=checkpointer
 )
 
-# ============================================================================
-# 5. Run Agent with Context
-# ============================================================================
-
 # Context provides user-specific information
 context = Context(user_id="user_123", session_id="session_001")
 
@@ -137,22 +116,3 @@ result = agent.invoke(
     config=config
 )
 print(f"Agent: {result['messages'][-1].content}")
-
-
-# ============================================================================
-# 6. Multi-tool Workflow
-# ============================================================================
-
-complex_query = """I'm user_456. Can you:
-1. Check my location
-2. Get the weather there
-3. Give me a recommendation for what to wear today"""
-
-print(f"User: {complex_query}")
-
-result = agent.invoke(
-    {"messages": [{"role": "user", "content": complex_query}]},
-    config={"configurable": {"thread_id": "workflow_thread"}}
-)
-
-print(f"\nAgent: {result['messages'][-1].content}")
