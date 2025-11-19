@@ -1,0 +1,25 @@
+# LangGraph Course Dependencies (2025)
+# Python 3.10+ required
+
+# Core LangGraph and LangChain
+langgraph>=0.2.50
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-openai>=0.2.0
+langchain-community>=0.3.0
+
+# Environment management
+python-dotenv>=1.0.0
+
+# Type checking (optional but recommended)
+typing-extensions>=4.12.0
+
+# For persistence examples
+aiosqlite>=0.20.0
+
+# For vector store examples (RAG)
+faiss-cpu>=1.9.0
+tiktoken>=0.8.0
+
+# Optional: Better formatting
+rich>=13.9.0
