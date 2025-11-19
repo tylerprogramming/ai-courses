@@ -1,0 +1,25 @@
+# LangChain Core (1.0.7+)
+langchain==1.0.7
+langchain-core
+langchain-community
+
+# LLM Provider - OpenAI (you can swap for langchain-anthropic, langchain-google-genai, etc.)
+langchain-openai
+
+# Vector Stores
+faiss-cpu  # For vector similarity search (use faiss-gpu if you have CUDA)
+chromadb   # Alternative vector store
+
+# Document Loaders
+pypdf      # For PDF loading
+beautifulsoup4  # For HTML parsing
+lxml       # For XML/HTML parsing
+
+# Text Processing
+tiktoken   # For OpenAI token counting
+
+# Utilities
+python-dotenv  # For environment variable management
+
+# Optional but recommended
+langsmith  # For monitoring and debugging (requires account at smith.langchain.com)
