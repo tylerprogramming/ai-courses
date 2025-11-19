@@ -30,16 +30,14 @@ long_video = openai.videos.create_and_poll(
 print(f"Long-form video completed. ID: {long_video.id}")
 download_video(long_video.id, "outputs/long_form.mp4")
 
-# Example 2: Short-form video (vertical/portrait) - auto-polls until complete
-print("\nCreating short-form video (vertical)...")
-short_video = openai.videos.create_and_poll(
-    model="sora-2",
-    prompt="Vertical street food closeups; handheld micro-jitters; sodium vapor lights.",
-    seconds='4',
-    size="720x1280"
-)
+# # Example 2: Short-form video (vertical/portrait) - auto-polls until complete
+# print("\nCreating short-form video (vertical)...")
+# short_video = openai.videos.create_and_poll(
+#     model="sora-2",
+#     prompt="Vertical street food closeups; handheld micro-jitters; sodium vapor lights.",
+#     seconds='4',
+#     size="720x1280"
+# )
 
-print(f"Short-form video completed. ID: {short_video.id}")
-download_video(short_video.id, "outputs/short_form.mp4")
-
-print("\n✓ Both videos generated and downloaded successfully!")
+# print(f"Short-form video completed. ID: {short_video.id}")
+# download_video(short_video.id, "outputs/short_form.mp4")
