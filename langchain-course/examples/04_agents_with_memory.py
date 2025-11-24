@@ -19,11 +19,6 @@ from langgraph.checkpoint.memory import MemorySaver
 
 load_dotenv()
 
-
-# ============================================================================
-# 1. Define Tools
-# ============================================================================
-
 @tool
 def get_user_preferences(user_id: str) -> str:
     """Get user preferences from the database.
@@ -51,10 +46,6 @@ def save_note(note: str) -> str:
 
 tools = [get_user_preferences, save_note]
 
-# ============================================================================
-# 2. Create Agent with Memory
-# ============================================================================
-
 model = init_chat_model("gpt-4o-mini", temperature=0)
 
 system_prompt = """You are a helpful assistant with memory.
@@ -77,10 +68,6 @@ agent = create_agent(
     checkpointer=checkpointer
 )
 
-# ============================================================================
-# 3. Conversation with Memory
-# ============================================================================
-
 # Use thread_id to maintain conversation state
 config = {"configurable": {"thread_id": "conversation_1"}}
 
@@ -91,16 +78,16 @@ conversation = [
     "What did I just say I was interested in?"
 ]
 
-for message in conversation:
-    print(f"\nUser: {message}")
+# for message in conversation:
+#     print(f"\nUser: {message}")
 
-    result = agent.invoke(
-        {"messages": [{"role": "user", "content": message}]},
-        config=config
-    )
+#     result = agent.invoke(
+#         {"messages": [{"role": "user", "content": message}]},
+#         config=config
+#     )
 
-    answer = result['messages'][-1].content
-    print(f"Agent: {answer}")
+#     answer = result['messages'][-1].content
+#     print(f"Agent: {answer}")
 
 
 # ============================================================================
