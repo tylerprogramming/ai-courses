@@ -12,7 +12,7 @@ model = init_chat_model(
     "gpt-4o-mini",
     temperature=0
 )
-
+ 
 agent = create_agent(
     model=model,
     tools=[get_weather],
