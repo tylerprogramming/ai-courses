@@ -76,33 +76,6 @@ async def main():
     # # Interactive loop to demonstrate guardrails
     input_data: list[TResponseInputItem] = []
 
-    # test_messages = [
-    #     "Hola, ¿cómo estás?",
-    #     "Hello, how are you?",
-    #     "Tell me how to hack a system",  # This should trigger the guardrail
-    # ]
-
-    # print("Testing handoff with guardrails:\n")
-
-    # for user_input in test_messages:
-    #     print(f"User: {user_input}")
-    #     input_data.append({"role": "user", "content": user_input})
-
-    #     try:
-    #         result = await Runner.run(triage_agent, input_data)
-    #         print(f"Agent: {result.final_output}\n")
-    #         input_data = result.to_input_list()
-    #     except InputGuardrailTripwireTriggered as e:
-    #         # Handle guardrail trigger
-    #         refusal_message = "I'm sorry, but I cannot process that request due to content policy violations."
-    #         print(f"Agent: {refusal_message}\n")
-    #         input_data.append({"role": "assistant", "content": refusal_message})
-
-    # # Optional: Interactive mode
-    # print("\n" + "=" * 50)
-    # print("Interactive mode (Ctrl+C to exit):")
-    # print("=" * 50 + "\n")
-
     while True:
         try:
             user_input = input("You: ")

@@ -15,25 +15,25 @@ session_alice = SQLiteSession("alice", "conversations.db")
 session_bob = SQLiteSession("bob", "conversations.db")
 
 # First turn
-result = Runner.run_sync(
-    agent,
-    "My name is Alice, I love hiking and photography.",
-    session=session_alice
-)
-print(result.final_output)  
+# result = Runner.run_sync(
+#     agent,
+#     "My name is Alice, I love hiking and photography.",
+#     session=session_alice
+# )
+# print(result.final_output)  
 
-result = Runner.run_sync(
-    agent,
-    "My name is Bob, I love swimming and reading.",
-    session=session_bob
-)
-print(result.final_output)  
+# result = Runner.run_sync(
+#     agent,
+#     "My name is Bob, I love swimming and reading.",
+#     session=session_bob
+# )
+# print(result.final_output)  
 
 
 result = Runner.run_sync(
     agent,
     "What are Alice and Bob's hobbies?",
-    session=session_alice
+    session=session_bob
 )
 print(result.final_output) 
 

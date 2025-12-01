@@ -4,7 +4,7 @@ load_dotenv()
 
 client = OpenAI()
 
-VECTOR_STORE_ID = "vs_68e816175af88191aa35377b59081d2c"
+VECTOR_STORE_ID = "insert_id_here"
 
 # Add more documents
 file_batch = client.vector_stores.file_batches.upload_and_poll(

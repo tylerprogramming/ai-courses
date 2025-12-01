@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-VECTOR_STORE_ID = "vs_68e816175af88191aa35377b59081d2c"
+VECTOR_STORE_ID = "insert_id_here"
 
 rag_agent = Agent(
     name="RAG Researcher",
@@ -20,7 +20,7 @@ rag_agent = Agent(
 
 result = Runner.run_sync(
     rag_agent,
-    "What does the file 'new_notes.txt' say about Python?"
+    "What does the file 'new_notes.txt' say about error handling and what is the exact sample code?"
 )
 
 print("=== Final Answer ===")
