@@ -11,8 +11,8 @@ file_batch = client.vector_stores.file_batches.upload_and_poll(
     vector_store_id=VECTOR_STORE_ID,
     files=[
         open("data/new_notes.txt", "rb"),
-        # open("data/meeting_transcript.pdf", "rb"),
-        # open("data/marketing_plan.docx", "rb"),
+        open("data/meeting_transcript.pdf", "rb"),
+        open("data/marketing_plan.docx", "rb"),
     ]
 )
 
