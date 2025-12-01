@@ -1,0 +1,140 @@
+These are new notes for testing vector store uploads.
+They contain sample content.
+
+Python is a versatile programming language that supports multiple paradigms, including procedural, object-oriented, and functional programming.
+
+---
+Note 1: Variables and Data Types
+In Python, variables do not need explicit declaration. For example:
+x = 10         # integer
+y = 3.14       # float
+name = "Alice" # string
+is_valid = True # boolean
+
+---
+Note 2: Lists and Dictionaries
+Lists are ordered collections:
+numbers = [1, 2, 3, 4]
+Dictionaries store key-value pairs:
+person = {"name": "Bob", "age": 32}
+
+---
+Note 3: Loops
+For loops iterate over sequences:
+for n in numbers:
+    print(n)
+While loops:
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+
+---
+Note 4: Functions
+Functions are defined with 'def':
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("World")
+
+---
+Note 5: Classes and Objects
+Python uses classes for OOP:
+class Dog:
+    def __init__(self, name):
+        self.name = name
+    def bark(self):
+        print(self.name + " says woof!")
+
+my_dog = Dog("Rex")
+my_dog.bark()
+
+---
+Note 6: File I/O
+with open("example.txt", "w") as f:
+    f.write("Hello, file!")
+
+with open("example.txt") as f:
+    print(f.read())
+
+---
+Note 7: Virtual Environments
+Create with:
+python -m venv venv
+Activate:
+source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
+
+---
+Note 8: Installing Packages
+pip install requests
+import requests
+
+---
+Note 9: List Comprehensions
+squares = [x*x for x in range(10) if x % 2 == 0]
+
+---
+Note 10: Exception Handling
+try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero.")
+
+---
+Note 11: Working with Modules
+import math
+print(math.sqrt(16))
+
+---
+Note 12: F-Strings for Formatting
+name = "Alice"
+age = 30
+print(f"{name} is {age} years old.")
+
+---
+Note 13: Type Hints
+def greet(name: str) -> None:
+    print(f"Hello, {name}")
+
+---
+Note 14: The Python REPL
+Start it by running 'python' in your terminal. Excellent for quick experimentation.
+
+---
+Note 15: Using pip to List Installed Packages
+pip list
+
+---
+Note 16: Docstrings
+def multiply(a, b):
+    """
+    Multiplies two numbers.
+    """
+    return a * b
+
+---
+Note 17: Using map and filter
+result = list(map(lambda x: x * 2, numbers))
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+
+---
+Note 18: Reading JSON
+import json
+with open("data.json") as f:
+    data = json.load(f)
+
+---
+Note 19: Writing Your First Script
+Create a file named hello.py:
+print("Hello, Python!")
+
+Run with: python hello.py
+
+---
+Note 20: Getting Help
+Use the built-in help() function:
+help(print)
+help(list)
+
+---
