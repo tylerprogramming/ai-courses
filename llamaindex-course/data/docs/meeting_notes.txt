@@ -1,0 +1,18 @@
+TEAM MEETING — R&D WEEKLY SYNC  
+Date: Sept 12, 2025  
+Attendees: Alex, Priya, Jordan, Meredith
+
+TOPICS DISCUSSED:
+1. Battery Efficiency Test Results
+   - New iteration achieved +7.4% improvement.
+   - Need to validate under extreme temperature stress.
+
+2. AI Monitoring System
+   - Cloud dashboard nearing beta.
+   - Real-time alerts still in development.
+   - Decision: integrate anomaly detection using LlamaIndex retrieval agent.
+
+3. Next Steps
+   - Priya: publish internal test report by Friday.
+   - Jordan: finalize API endpoints for monitoring hub.
+   - Meredith: run user testing sessions with the marketing team.

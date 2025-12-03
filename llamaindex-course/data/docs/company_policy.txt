@@ -1,0 +1,16 @@
+ACME CORPORATION — INTERNAL POLICY
+
+1. Data Privacy
+The company follows strict data handling rules based on SOC 2 and GDPR guidelines.
+Customer information must never be stored in personal drives or emailed externally.
+All sensitive data must be encrypted at rest and in transit.
+
+2. Remote Work
+Employees may work remotely up to 3 days per week.
+Exceptions require manager approval.
+All remote work must be conducted using a secure VPN.
+
+3. Security Incidents
+Any suspected incident must be reported within 24 hours.
+The security team will initiate a standard investigation workflow:
+identify → isolate → analyze → resolve → document.
