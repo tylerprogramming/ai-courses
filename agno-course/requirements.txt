@@ -1,0 +1,14 @@
+# Agno Framework Course Requirements
+
+# Core framework
+agno>=2.0.0
+
+# Optional dependencies for tools and features
+yfinance>=0.2.0           # For financial data tools
+duckduckgo-search>=3.8.0  # For web search tools
+
+# Database and storage
+psycopg2-binary>=2.9.0    # For PostgreSQL vector database (optional)
+
+# Additional useful packages
+python-dotenv>=1.0.0      # For managing environment variables
