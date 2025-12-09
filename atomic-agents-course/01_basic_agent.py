@@ -71,8 +71,6 @@ agent = AtomicAgent[SentimentInput, SentimentOutput](
 
 # Step 5: Use the Agent
 if __name__ == "__main__":
-    print("=== Atomic Agents: Basic Agent Example ===\n")
-
     # Test cases
     test_texts = [
         "I absolutely love this product! It exceeded all my expectations.",

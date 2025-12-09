@@ -57,47 +57,55 @@ class CalculatorTool(BaseTool[CalculatorToolInputSchema, CalculatorToolOutputSch
             raise ValueError(f"Invalid expression: {e}")
 
 class CalculatorProvider(BaseDynamicContextProvider):
-    def __init__(self, title):
-        super().__init__(title)
-        self.result = None
+    def __init__(self, title: str, calculation_result: CalculatorToolOutputSchema | Exception | None = None):
+        super().__init__(title=title)
+        self.calculation_result = calculation_result
 
     def get_info(self) -> str:
-        return f'CALCULATOR RESULT: "{self.result}"'
+        if self.calculation_result is None:
+            return f"{self.title}: No calculation performed yet"
+        return f"{self.title}: {self.calculation_result}"
 
 
-calculator_provider = CalculatorProvider("calculator")
+# Step 3: Define Agent Input/Output Schemas (separate from tool schemas)
+class MathAgentInputSchema(BaseIOSchema):
+    """Input schema for the math agent"""
+    question: str = Field(..., description="Math question from the user")
 
-# Step 3: Create System Prompt
+
+class MathAgentOutputSchema(BaseIOSchema):
+    """Output schema for the math agent"""
+    answer: str = Field(..., description="Answer to the user's math question")
+    expression_used: str | None = Field(None, description="The mathematical expression that was evaluated, if any")
+
+
+# Step 4: Create System Prompt
 system_prompt = SystemPromptGenerator(
     background=[
         "You are a helpful math assistant.",
         "You can answer math questions and perform calculations.",
-        "You have access to a calculator tool for computations."
+        "You have access to calculator results for computations."
     ],
     steps=[
         "Understand the math question",
-        "Determine if you need to use the calculator tool",
-        "If needed, call the calculator with the appropriate expression",
+        "Use the calculator results provided in context",
         "Provide a clear answer with explanation"
     ],
     output_instructions=[
         "Provide the final answer clearly",
         "Explain your reasoning step-by-step",
         "Show any calculations you performed"
-    ],
-    context_providers={"calculator": calculator_provider}
+    ]
 )
 
 
-# Step 4: Create the Calculator Tool
+# Step 5: Create the Calculator Tool
 calculator_tool = CalculatorTool()
 
-# Step 5: Configure the Agent
-# Note: In this simple example, we'll have the agent decide when to use the tool
-# and we'll call it manually. For automatic tool calling, you'd use ToolInterfaceAgent
+# Step 6: Configure the Agent
 client = instructor.from_openai(OpenAI())
 
-math_agent = AtomicAgent[CalculatorToolInputSchema, CalculatorToolOutputSchema](
+math_agent = AtomicAgent[MathAgentInputSchema, MathAgentOutputSchema](
     config=AgentConfig(
         client=client,
         model="gpt-4o-mini",
@@ -106,25 +114,44 @@ math_agent = AtomicAgent[CalculatorToolInputSchema, CalculatorToolOutputSchema](
     )
 )
 
-math_agent.register_context_provider("calculator", calculator_provider)
 
-
-# Step 6: Use the Tool and Agent Together
+# Step 7: Use the Tool and Agent Together
 if __name__ == "__main__":
-    questions = [
-        "What is 15 multiplied by 27?",
-        "If I have 100 apples and give away 37, then buy 25 more, how many do I have?",
+    # Example math problems with their expressions
+    problems = [
+        {
+            "question": "What is 15 multiplied by 27?",
+            "expression": "15 * 27"
+        },
+        {
+            "question": "If I have 100 apples and give away 37, then buy 25 more, how many do I have?",
+            "expression": "100 - 37 + 25"
+        },
     ]
 
-    for i, question in enumerate(questions, 1):
-        print(f"Question {i}: {question}\n")
+    for i, problem in enumerate(problems, 1):
+        print(f"Question {i}: {problem['question']}\n")
 
-        # Create input
-        input_data = CalculatorToolInputSchema(expression=question)
+        # Step 1: Run the calculator tool first
+        calculator_input = CalculatorToolInputSchema(expression=problem['expression'])
+        
+        try:
+            calculator_result = calculator_tool.run(calculator_input)
+            calculator_provider = CalculatorProvider("Calculator Result", calculator_result)
+            print(f"Calculator computed: {problem['expression']} = {calculator_result.result}")
+        except Exception as e:
+            calculator_provider = CalculatorProvider("Calculator Failed", e)
+            print(f"Calculator error: {e}")
+        
+        # Step 2: Register the calculator results as context for the agent
+        math_agent.register_context_provider("calculator", calculator_provider)
 
-        # Run agent
-        result = math_agent.run(input_data)
+        # Step 3: Run the agent with the natural language question
+        agent_input = MathAgentInputSchema(question=problem['question'])
+        answer = math_agent.run(agent_input)
 
         # Display output
-        print(f"Answer: {result.result}")
+        print(f"Agent Answer: {answer.answer}")
+        if answer.expression_used:
+            print(f"Expression Used: {answer.expression_used}")
         print("-" * 60 + "\n")
