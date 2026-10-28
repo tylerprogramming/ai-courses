@@ -4,3 +4,6 @@ smolagents[toolkit,e2b]>=1.26,<2
 huggingface-hub>=1.33,<3
 requests>=2.32,<3
 python-dotenv>=1.0,<2
+# 05_mult-agent.py authorizes these imports; smolagents refuses to start if they are missing
+numpy>=2.0,<3
+pandas>=2.2,<4
