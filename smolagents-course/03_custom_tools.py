@@ -3,7 +3,7 @@ from huggingface_hub import list_models
 
 task = "text-to-video"
 
-most_downloaded_model = next(iter(list_models(filter=task, sort="downloads", direction=-1)))
+most_downloaded_model = next(iter(list_models(filter=task, sort="downloads")))  # hub 1.x sorts descending; `direction` was removed
 print(most_downloaded_model.id)
 
 @tool
@@ -15,7 +15,7 @@ def model_download_tool(task: str) -> str:
     Args:
         task: The task for which to get the download count.
     """
-    most_downloaded_model = next(iter(list_models(filter=task, sort="downloads", direction=-1)))
+    most_downloaded_model = next(iter(list_models(filter=task, sort="downloads")))  # hub 1.x sorts descending; `direction` was removed
     return most_downloaded_model.id
 
 from smolagents import CodeAgent, InferenceClientModel
