@@ -10,6 +10,9 @@ from smolagents import (
     WebSearchTool,
 )
 
+# The smolagents 1.26 default (Qwen3-Next-80B-A3B-Thinking) is not served by Inference Providers; see README
+HF_MODEL_ID = "Qwen/Qwen3-235B-A22B-Instruct-2507"
+
 
 @tool
 def visit_webpage(url: str) -> str:
@@ -39,7 +42,7 @@ def visit_webpage(url: str) -> str:
     except Exception as e:
         return f"An unexpected error occurred: {str(e)}"
     
-model = InferenceClientModel()
+model = InferenceClientModel(model_id=HF_MODEL_ID)
 
 web_agent = ToolCallingAgent(
     tools=[WebSearchTool(), visit_webpage],
