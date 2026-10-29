@@ -1,0 +1,8 @@
+# Install with: pip install -r requirements.txt
+# These scripts use the classic `import autogen` API (ConversableAgent, LLMConfig,
+# AutoPattern, run_group_chat). Since AG2 v1.0 that API ships as the `autogen`
+# package (github.com/ag2ai/ag2classic); `pip install ag2` now installs the new
+# `import ag2` framework and would break every script here.
+autogen[openai]>=0.14.1,<0.15
+python-dotenv>=1.0,<2
+typing_extensions>=4.12
