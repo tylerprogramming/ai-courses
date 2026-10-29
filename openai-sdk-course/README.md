@@ -29,10 +29,7 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install openai-agents python-dotenv
-
-# For RAG examples, also install:
-pip install openai  # For file uploads
+pip install -r requirements.txt
 ```
 
 ## Setup
