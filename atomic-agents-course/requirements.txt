@@ -1,0 +1,3 @@
+atomic-agents>=2.15,<3
+openai>=2.0,<4
+python-dotenv>=1.0
