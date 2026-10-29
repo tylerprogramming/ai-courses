@@ -82,10 +82,12 @@ For other providers (Groq, Anthropic, Gemini), install the matching instructor e
 - Agent can decide when to use tools
 - Learn how tools integrate with the agent workflow
 
-### Example 3: Multi-Agent Orchestration (`03_multi_agent_system.py`)
-- Build multiple specialized agents
-- Create an orchestrator that routes requests
-- See how agents compose together
+### Example 3: Chaining Schemas (`03_modular_example.py`)
+- Point an agent's output schema at a tool's input schema
+- Swap one search tool for another by changing the schema
+- See how agents and tools compose together
+
+This one is a reading example, not a runnable script. It is the "Chaining Schemas and Agents" snippet from the [Atomic Agents README](https://github.com/BrainBlend-AI/atomic-agents#chaining-schemas-and-agents), and it imports `web_search_agent.tools...`, which lives in the upstream repo's [web-search-agent example](https://github.com/BrainBlend-AI/atomic-agents/tree/main/atomic-examples/web-search-agent), not in this folder or on PyPI. `SomeSearchTool` stands in for whichever tool you swap in.
 
 ## Key Takeaways
 
@@ -96,11 +98,10 @@ For other providers (Groq, Anthropic, Gemini), install the matching instructor e
 
 ## Next Steps
 
-Run the examples in order:
+Run the examples in order (example 3 is for reading, see above):
 ```bash
 python 01_basic_agent.py
 python 02_agent_with_tools.py
-python 03_multi_agent_system.py
 ```
 
 ## Resources
