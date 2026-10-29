@@ -29,10 +29,7 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install openai-agents python-dotenv
-
-# For RAG examples, also install:
-pip install openai  # For file uploads
+pip install -r requirements.txt
 ```
 
 ## Setup
@@ -307,7 +304,7 @@ The `data/` directory contains sample documents for RAG examples:
 | File | Type | Description |
 |------|------|-------------|
 | `new_notes.txt` | Text | Python programming notes |
-| `meeting_transcript.pdf` | PDF | Sample meeting transcript |
+| `meeting_transcript.pdf` | PDF | Sample meeting transcript (not included; add your own PDF or remove it from `utility/update_filestore.py`) |
 | `marketing_plan.docx` | Word | Business planning document |
 
 ---
