@@ -1,0 +1,4 @@
+llama-index>=0.14.25,<0.15
+llama-index-readers-web>=0.7,<0.8
+feedparser>=6.0
+python-dotenv>=1.0
