@@ -1,0 +1,7 @@
+# Install with: pip install -r requirements.txt  (Python 3.10+)
+# Lessons 01-05 and bonus_rag.py: Agent, Runner, function_tool, WebSearchTool,
+# FileSearchTool, SQLiteSession and the guardrail API, all present in 0.24
+openai-agents~=0.24
+# utility/update_filestore.py uploads files with the OpenAI client directly
+openai>=3,<4
+python-dotenv>=1.0,<2
