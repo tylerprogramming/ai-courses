@@ -55,10 +55,20 @@ Input (Pydantic) → Agent + System Prompt → LLM → Output (Pydantic)
 
 ## Installation
 
+Atomic Agents 2.x needs Python 3.12 or newer.
+
 ```bash
-pip install atomic-agents
-pip install openai  # or groq, anthropic, etc.
+cd atomic-agents-course
+pip install -r requirements.txt
 ```
+
+Then put your key in a `.env` file in this folder:
+
+```bash
+OPENAI_API_KEY=your_api_key_here
+```
+
+For other providers (Groq, Anthropic, Gemini), install the matching instructor extra, e.g. `pip install "instructor[anthropic]"`.
 
 ## The 3 Examples
 
