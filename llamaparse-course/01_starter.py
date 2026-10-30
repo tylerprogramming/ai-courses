@@ -11,9 +11,11 @@ parser = LlamaParse(
     language="en"   # preserves table layout
 )
 
-parsed_docs = parser.load_data("data/us-gov.pdf")
+# parse() returns a JobResult with per-page output; load_data() returns a
+# plain list of Documents, which has no .pages attribute.
+result = parser.parse("data/us-gov.pdf")
 
-for page in parsed_docs.pages:
+for page in result.pages:
     print(page.text)
     print(page.md)
     print(page.images)
