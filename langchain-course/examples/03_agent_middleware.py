@@ -19,11 +19,11 @@ def calc(expression: str) -> str:
     return str(eval(expression))
 
 agent = create_agent(
-    model="gpt-4o",
+    model="gpt-5.4-mini",
     tools=[calc],
     middleware=[
         SummarizationMiddleware(
-            model="gpt-4o-mini",
+            model="gpt-5.4-mini",
             max_tokens_before_summary = 250,
             messages_to_keep = 10,
         ),

@@ -9,8 +9,7 @@ def get_weather(city: str) -> str:
     return f"It's always sunny in {city}!"
 
 model = init_chat_model(
-    "gpt-4o-mini",
-    temperature=0
+    "gpt-5.4-mini",
 )
  
 agent = create_agent(
