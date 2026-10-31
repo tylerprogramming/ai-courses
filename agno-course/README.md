@@ -37,6 +37,8 @@ export OPENAI_API_KEY=your-key-here
 # Optional: export ANTHROPIC_API_KEY=your-key-here
 ```
 
+All lessons use `gpt-5.4-mini`. The course was written with `gpt-4o-mini` and `gpt-4.1`, which OpenAI removes from the API on 2027-01-14 ([deprecations](https://developers.openai.com/api/docs/deprecations)).
+
 ## Course Structure
 
 This crash course covers everything you need to get started with Agno in 6 lessons:
@@ -63,7 +65,7 @@ from agno.models.openai import OpenAIChat
 
 agent = Agent(
     name="Assistant",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     instructions=["You are a helpful assistant."],
     add_history_to_context=True,
     markdown=True,
