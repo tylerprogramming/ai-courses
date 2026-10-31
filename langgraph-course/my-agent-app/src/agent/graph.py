@@ -16,8 +16,7 @@ from langchain_core.messages import AnyMessage
 
 # Use async-compatible model
 model = ChatOpenAI(
-    model="gpt-4o-mini",
-    temperature=0.7,
+    model="gpt-5.4-mini",
 )
 
 

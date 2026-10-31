@@ -53,7 +53,7 @@ print(f"✓ Created {len(tools)} tools\n")
 print("2. Initializing Model")
 print("=" * 70)
 
-model = init_chat_model("gpt-4o-mini", temperature=0)
+model = init_chat_model("gpt-5.4-mini")
 model_with_tools = model.bind_tools(tools)
 
 print("✓ Model bound with tools\n")

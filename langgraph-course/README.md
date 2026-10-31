@@ -68,6 +68,8 @@ python examples/02_functional_api.py
 python examples/03_local_server_setup.py
 ```
 
+The examples and `my-agent-app` use `gpt-5.4-mini`. They previously used `gpt-4o-mini`, which OpenAI removes from the API on January 14, 2027 ([deprecations](https://developers.openai.com/api/docs/deprecations)). GPT-5 models only accept the default temperature, so the code no longer sets one.
+
 ## Two APIs, Same Power
 
 ### Graph API (Declarative)
