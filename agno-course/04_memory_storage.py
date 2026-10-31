@@ -23,7 +23,7 @@ user_db = SqliteDb(
 
 personal_assistant = Agent(
     name="PersonalAssistant",
-    model=OpenAIChat(id="gpt-4.1"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     db=user_db,
     description="A personal assistant with user-specific memory",
     instructions=[

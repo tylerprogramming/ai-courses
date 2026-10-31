@@ -19,7 +19,7 @@ load_dotenv()
 strategist = Agent(
     name="ContentStrategist",
     role="Creative Strategist",
-    model=OpenAIChat(id="gpt-4.1"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     instructions=[
         "You are a creative content strategist.",
         "Generate innovative, audience-focused ideas.",
@@ -30,7 +30,7 @@ strategist = Agent(
 writer = Agent(
     name="ContentWriter",
     role="Content Creator",
-    model=OpenAIChat(id="gpt-4.1"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     instructions=[
         "You are a skilled content writer.",
         "Write engaging, clear, and compelling content.",
@@ -42,7 +42,7 @@ writer = Agent(
 editor = Agent(
     name="Editor",
     role="Senior Editor",
-    model=OpenAIChat(id="gpt-4.1"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     instructions=[
         "You are a senior editor.",
         "Review content for clarity, grammar, and impact.",

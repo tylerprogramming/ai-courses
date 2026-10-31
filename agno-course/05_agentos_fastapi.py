@@ -24,7 +24,7 @@ load_dotenv()
 
 simple_agent = Agent(
     name="SimpleAssistant",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     instructions=["You are a helpful AI assistant."],
     add_history_to_context=True,
     markdown=True,
@@ -43,7 +43,7 @@ simple_os = AgentOS(
 
 research_agent = Agent(
     name="ResearchAssistant",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     tools=[DuckDuckGoTools(), YFinanceTools()],
     db=SqliteDb(session_table="sessions", db_file="research.db"),
     instructions=[
@@ -69,14 +69,14 @@ research_os = AgentOS(
 
 web_researcher = Agent(
     name="WebResearcher",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     tools=[DuckDuckGoTools()],
     instructions=["Search for current information on the web."],
 )
 
 financial_analyst = Agent(
     name="FinancialAnalyst",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     tools=[YFinanceTools()],
     instructions=["Analyze financial data and stock metrics."],
 )

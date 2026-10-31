@@ -46,7 +46,7 @@ def get_current_datetime() -> str:
 # Example 2: Multi-Tool Agent
 multi_tool_agent = Agent(
     name="InvestmentResearcher",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     tools=[
         DuckDuckGoTools(),
         YFinanceTools(),
