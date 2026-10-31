@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # 1. Set up LLM using Settings
-Settings.llm = OpenAI(model="gpt-4o-mini", temperature=0.2)
+Settings.llm = OpenAI(model="gpt-5.4-mini")
 
 # 2. Load documents
 documents = SimpleDirectoryReader("data/docs").load_data()

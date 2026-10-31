@@ -41,7 +41,7 @@ Understand these core concepts:
 
 ## ▶️ Setup and Run
 
-Needs Python 3.10 or newer and an OpenAI key. The scripts use `gpt-4o-mini` for chat and LlamaIndex's default OpenAI embedding model for indexing.
+Needs Python 3.10 or newer and an OpenAI key. The scripts use `gpt-5.4-mini` for chat and LlamaIndex's default OpenAI embedding model for indexing. They previously used `gpt-4o-mini`, which OpenAI removes from the API on January 14, 2027 ([deprecations](https://developers.openai.com/api/docs/deprecations)). GPT-5 models only accept the default temperature, so the scripts no longer set one.
 
 ```bash
 cd llamaindex-course
