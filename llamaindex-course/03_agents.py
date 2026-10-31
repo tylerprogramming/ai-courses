@@ -12,7 +12,7 @@ def multiply(a: float, b: float) -> float:
 # Create an agent workflow with our calculator tool
 agent = FunctionAgent(
     tools=[multiply],
-    llm=OpenAI(model="gpt-4o-mini"),
+    llm=OpenAI(model="gpt-5.4-mini"),
     system_prompt="You are a helpful assistant that can multiply two numbers.",
 )
 

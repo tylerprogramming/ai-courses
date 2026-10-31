@@ -34,7 +34,7 @@ async def search_documents(query: str) -> str:
 # Create an enhanced workflow with both tools
 agent = FunctionAgent(
     tools=[multiply, search_documents],
-    llm=OpenAI(model="gpt-4o-mini"),
+    llm=OpenAI(model="gpt-5.4-mini"),
     system_prompt="""You are a helpful assistant that can perform calculations
     and search through documents to answer questions.""",
 )
