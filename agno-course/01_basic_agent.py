@@ -16,7 +16,7 @@ load_dotenv()
 
 assistant = Agent(
     name="PythonTutor",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=OpenAIChat(id="gpt-5.4-mini"),
     description="A helpful Python programming tutor",
     instructions=[
         "You are an expert Python tutor.",
