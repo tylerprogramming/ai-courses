@@ -1,4 +1,4 @@
-from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings
 from llama_index.core.agent.workflow import FunctionAgent
 from llama_index.llms.openai import OpenAI
 from dotenv import load_dotenv
@@ -6,6 +6,10 @@ import asyncio
 import os
 
 load_dotenv()
+
+# The query engine below falls back to OpenAI()'s default model, gpt-3.5-turbo,
+# which OpenAI shut down on 2026-10-23, so set the LLM explicitly
+Settings.llm = OpenAI(model="gpt-5.4-mini")
 
 from llama_index.core import StorageContext, load_index_from_storage
 
