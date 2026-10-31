@@ -46,7 +46,7 @@ def save_note(note: str) -> str:
 
 tools = [get_user_preferences, save_note]
 
-model = init_chat_model("gpt-4o-mini", temperature=0)
+model = init_chat_model("gpt-5.4-mini")
 
 system_prompt = """You are a helpful assistant with memory.
 

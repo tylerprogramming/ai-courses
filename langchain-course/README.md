@@ -207,6 +207,8 @@ langchain-course/
 - API key for an LLM provider (OpenAI recommended for this course)
 - Understanding of LLMs and embeddings (helpful but not required)
 
+The runnable examples in `examples/` use `gpt-5.4-mini`. They previously used `gpt-4o` and `gpt-4o-mini`, which OpenAI removes from the API on January 14, 2027 ([deprecations](https://developers.openai.com/api/docs/deprecations)). GPT-5 models only accept the default temperature, so the examples no longer pass `temperature=0`.
+
 ---
 
 ## Installation
