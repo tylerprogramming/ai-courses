@@ -34,7 +34,7 @@ try:
             print("[Storage] Document hash matches, loading from cache...")
             storage_context = StorageContext.from_defaults(persist_dir=PERSIST_DIR)
             index = load_index_from_storage(storage_context)
-            llm = OpenAI(model="gpt-4o", temperature=0.1)
+            llm = OpenAI(model="gpt-5.4-mini")
             query_engine = index.as_query_engine(llm=llm, similarity_top_k=3)
         else:
             raise ValueError(f"Document hash mismatch (stored: {stored_hash}, current: {current_hash})")
@@ -86,7 +86,7 @@ except Exception as e:
     index = VectorStoreIndex.from_documents(markdown_nodes)
 
     # Create query engine with multimodal support
-    llm = OpenAI(model="gpt-4o", temperature=0.1)
+    llm = OpenAI(model="gpt-5.4-mini")
     query_engine = index.as_query_engine(llm=llm, similarity_top_k=3)
 
     # Persist the index
