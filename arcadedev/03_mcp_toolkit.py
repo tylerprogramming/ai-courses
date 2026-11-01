@@ -19,7 +19,7 @@ async def main():
     google_agent = Agent(
         name="Google agent",
         instructions="You are a helpful assistant that can assist with Google API calls.",
-        model="gpt-4.1",
+        model="gpt-5.4-mini",
         tools=tools,
     )
  
