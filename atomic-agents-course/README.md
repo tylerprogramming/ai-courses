@@ -70,6 +70,8 @@ OPENAI_API_KEY=your_api_key_here
 
 For other providers (Groq, Anthropic, Gemini), install the matching instructor extra, e.g. `pip install "instructor[anthropic]"`.
 
+The examples use `gpt-5.4-mini`. They previously used `gpt-4o-mini` (removed from the API on January 14, 2027) and `gpt-5-mini` (shut down December 11, 2026), per OpenAI's [deprecations](https://developers.openai.com/api/docs/deprecations) page. If you followed the video with an older model name, swap in `gpt-5.4-mini`; nothing else in the code changes.
+
 ## The 3 Examples
 
 ### Example 1: Basic Agent (`01_basic_agent.py`)
