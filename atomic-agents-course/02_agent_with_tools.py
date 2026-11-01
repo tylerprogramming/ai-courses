@@ -108,7 +108,7 @@ client = instructor.from_openai(OpenAI())
 math_agent = AtomicAgent[MathAgentInputSchema, MathAgentOutputSchema](
     config=AgentConfig(
         client=client,
-        model="gpt-4o-mini",
+        model="gpt-5.4-mini",
         system_prompt_generator=system_prompt,
         history=ChatHistory(),
     )
