@@ -27,7 +27,7 @@ agent = Agent(
             cache_tools_list=True,
         )
     ],
-    llm=LLM(model="gpt-4.1"),
+    llm=LLM(model="gpt-5.4-mini"),
     verbose=True
 )
 
