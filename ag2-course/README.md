@@ -18,7 +18,9 @@ pip install -r requirements.txt
 python 01_tools.py
 ```
 
-Every script loads its model from `OAI_CONFIG_LIST.json` with `LLMConfig.from_json`. Before the first run, replace the placeholder `api_key` in that file with your OpenAI key, and don't commit the real key. `gpt-4.1` is scheduled to shut down on 2027-01-14 ([OpenAI deprecations](https://developers.openai.com/api/docs/deprecations)). After that date, switch `model` to a current one.
+Every script loads its model from `OAI_CONFIG_LIST.json` with `LLMConfig.from_json`. Before the first run, replace the placeholder `api_key` in that file with your OpenAI key, and don't commit the real key.
+
+The config uses `gpt-5.4-mini`. The course was recorded with `gpt-4.1`, which OpenAI removes from the API on 2027-01-14 ([deprecations](https://developers.openai.com/api/docs/deprecations)). None of the scripts set `temperature` or `max_tokens`, so nothing else changes. `autogen` 0.14.1's price table has no `gpt-5.4-mini` entry, so you will see a "cost will be 0" warning; the chats still run.
 
 ## Which package
 
