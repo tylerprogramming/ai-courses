@@ -2,6 +2,8 @@
 
 A collection of Python examples for working with the OpenAI Sora API to generate and manage AI videos.
 
+> **Legacy code: the Sora API was shut down.** OpenAI removed the Videos API (`/v1/videos`) and the `sora-2` and `sora-2-pro` models on 2026-09-24, and lists no replacement ([OpenAI deprecations page](https://developers.openai.com/api/docs/deprecations), "2026-03-24: Sora 2 video generation models and Videos API"). Every script here, the FastAPI server and the `Sora-2 UGC.json` n8n workflow call that API, so they now fail. The code stays as it appears in the video. The 25 prompts in `prompts/` and the sample clips in `outputs/` still work as reference material.
+
 ## Setup
 
 1. **Install dependencies:**
