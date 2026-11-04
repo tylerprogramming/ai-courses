@@ -29,6 +29,8 @@ OPENAI_API_KEY=your_api_key_here
 ### [sora-2/](sora-2/)
 OpenAI Sora API video generation examples - starter scripts, CLI tool, and FastAPI server.
 
+Legacy: OpenAI shut down the Sora API (Videos API, `sora-2`, `sora-2-pro`) on 2026-09-24, so these examples no longer run. See [sora-2/README.md](sora-2/README.md).
+
 ```bash
 cd sora-2
 pip install -r requirements.txt
