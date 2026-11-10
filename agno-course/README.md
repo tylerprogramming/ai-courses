@@ -37,6 +37,8 @@ export OPENAI_API_KEY=your-key-here
 # Optional: export ANTHROPIC_API_KEY=your-key-here
 ```
 
+`agno` installs only its core. `requirements.txt` pulls the extras the lessons import (`openai`, `sqlite`, `ddg`, `yfinance`, `os`). If you install by hand, use `pip install "agno[openai,sqlite,ddg,yfinance,os]" python-dotenv`. Agno 2.x web search imports the `ddgs` package, not the older `duckduckgo-search`.
+
 All lessons use `gpt-5.4-mini`. The course was written with `gpt-4o-mini` and `gpt-4.1`, which OpenAI removes from the API on 2027-01-14 ([deprecations](https://developers.openai.com/api/docs/deprecations)).
 
 ## Course Structure
