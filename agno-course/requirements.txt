@@ -1,11 +1,12 @@
 # Agno Framework Course Requirements
 
-# Core framework
-agno>=2.0.0
-
-# Optional dependencies for tools and features
-yfinance>=0.2.0           # For financial data tools
-duckduckgo-search>=3.8.0  # For web search tools
+# Core framework. agno itself ships only the core; each extra pulls what a lesson imports:
+#   openai   -> OpenAIChat (every lesson)
+#   sqlite   -> SqliteDb (lessons 4 and 5)
+#   ddg      -> DuckDuckGoTools, which imports the `ddgs` package (lessons 2 and 5)
+#   yfinance -> YFinanceTools (lessons 2 and 5)
+#   os       -> AgentOS, FastAPI and uvicorn (lesson 5)
+agno[openai,sqlite,ddg,yfinance,os]>=2.0.0
 
 # Database and storage
 psycopg2-binary>=2.9.0    # For PostgreSQL vector database (optional)
