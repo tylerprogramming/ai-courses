@@ -40,7 +40,7 @@ wheels = [
 
 [[package]]
 name = "arcade-core"
-version = "3.3.4"
+version = "3.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "loguru" },
@@ -53,9 +53,9 @@ dependencies = [
     { name = "types-pytz" },
     { name = "types-toml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fe/40/e185638886b2138ed3b42c438be33ea478fc02d740f5e57e75767f8f15b5/arcade_core-3.3.4.tar.gz", hash = "sha256:8561b764ce8f279817bdd8a307649b555924f22c35f4bbd879b01328d071e9e8", size = 38035, upload-time = "2025-11-07T18:27:58.726Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/23/7d/a5baf39946de1e758546a8ba83c4cebb11f66a38d2faba8fffc7096b296b/arcade_core-3.4.0.tar.gz", hash = "sha256:1024d973fd51bba2a626fab0763c54021907f2a677d92b88061f8b375333267e", size = 38064, upload-time = "2025-12-05T22:59:02.174Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/62/14/893d62b0a85439333534f1ed22f64ef768159b5216b863d22874f35a3d5e/arcade_core-3.3.4-py3-none-any.whl", hash = "sha256:ec2c0fb1d8d6e50ea8756eb24e2c7842db6782a106d9be5a6af76f803d296202", size = 44869, upload-time = "2025-11-07T18:27:57.39Z" },
+    { url = "https://files.pythonhosted.org/packages/be/d0/dff472d1694310cefe87e411c5fd8d1270e894592fdb52133cc3d4cacd59/arcade_core-3.4.0-py3-none-any.whl", hash = "sha256:36cad54a74ee4434f2651459e156541e1d4fac3bb459d54cf0520c629510eb18", size = 44899, upload-time = "2025-12-05T22:59:00.686Z" },
 ]
 
 [[package]]
@@ -121,7 +121,7 @@ wheels = [
 
 [[package]]
 name = "arcade-serve"
-version = "3.0.0"
+version = "3.1.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "arcade-core" },
@@ -133,9 +133,9 @@ dependencies = [
     { name = "uvicorn" },
     { name = "watchfiles" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/98/e1/0b184cf1f42f05cca71abaeef35dae2825cdb40940328c2eefa207bb779b/arcade_serve-3.0.0.tar.gz", hash = "sha256:23f5aff46612b36e6763d4af2ba125a3252ae8bb0ca56de524d47f4239eeec84", size = 9678, upload-time = "2025-10-03T19:12:36.836Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/41/3b/f80e4ee43eb8370b48c383aad750bad9e6097cc022ba378e40e22d7c485a/arcade_serve-3.1.5.tar.gz", hash = "sha256:0dd0d167b342a9174da15ec2729b186d859b0161f6244e5563d5baa23794e585", size = 10621, upload-time = "2025-12-05T22:58:59.444Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/32/46/2f4100f3effb29a6fbd14f627b2f805ba4c20aa6160cf17c49e8b7963f2c/arcade_serve-3.0.0-py3-none-any.whl", hash = "sha256:47843045c05a3183be696c0af4cae7f03a707c2455cd04d7f9d549520cb294f5", size = 11900, upload-time = "2025-10-03T19:12:35.411Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/cb/449b842ca3ba685c2e4b9a876452f8fad4e554a8946da90e25475ec60d43/arcade_serve-3.1.5-py3-none-any.whl", hash = "sha256:200f9e195f0302b432f114b6dbe67f8069bfa321a538fafd74eabd0934b5e939", size = 13213, upload-time = "2025-12-05T22:58:57.963Z" },
 ]
 
 [[package]]
