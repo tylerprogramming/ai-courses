@@ -183,20 +183,20 @@ This crash course covers **Essentials + RAG** - everything you need to build rea
 ```
 langchain-course/
 ├── README.md (this file)
+├── QUICKSTART.md
 ├── requirements.txt
+├── .env.example
 └── examples/
-    ├── 01_setup.py
-    ├── 02_lcel_basics.py
-    ├── 03_tool_calling.py
-    ├── 04_prompts_templates.py
-    ├── 05_agents.py
-    ├── 06_memory.py
-    ├── 07_chatbot.py
-    ├── 08_document_loaders.py
-    ├── 09_text_splitters.py
-    ├── 10_vector_stores.py
-    └── 11_rag_system.py
+    ├── 01_agent_basics.py            # create_agent with one tool
+    ├── 02_agent_structured_output.py # response_format=ToolStrategy(...)
+    ├── 03_agent_middleware.py        # SummarizationMiddleware
+    ├── 04_agents_with_memory.py      # MemorySaver checkpointer + thread_id
+    └── 05_agents_advanced.py         # sub-agent as a tool (pattern sketch, not runnable)
 ```
+
+The examples were rewritten around LangChain 1.0's `create_agent` (November 2025). The topic list above is the full course outline; the earlier per-topic scripts (`01_setup.py` through `11_rag_system.py`) were removed, so LCEL, prompts, document loaders, text splitters, vector stores and RAG have no script in this folder.
+
+`05_agents_advanced.py` is a skeleton: it passes `model="..."` and `tools=[...]` placeholders, so fill those in before running it.
 
 ---
 
@@ -233,9 +233,10 @@ Each example file is self-contained and can be run independently:
 
 ```bash
 # Run any example
-python examples/01_setup.py
-python examples/02_lcel_basics.py
-# ... etc
+python examples/01_agent_basics.py
+python examples/02_agent_structured_output.py
+python examples/03_agent_middleware.py
+python examples/04_agents_with_memory.py
 ```
 
 Follow the examples in order for the best learning experience!
@@ -275,4 +276,4 @@ After completing this course, explore:
 
 ---
 
-**Let's get started! Head to `examples/01_setup.py` to begin.**
+**Let's get started! Head to `examples/01_agent_basics.py` to begin.**
