@@ -29,44 +29,55 @@ cp .env.example .env
 ## Step 3: Run Examples (5 minutes)
 
 ```bash
-# Example 1: Basics (graphs, state, routing)
-python examples/01_basics.py
+# Example 1: Graph API (state, nodes, conditional edges, tool loop)
+python examples/01_graph_api_basics.py
 
-# Example 2: Agents (tools, multi-agent)
-python examples/02_agents.py
+# Example 2: Functional API (@task / @entrypoint, streaming)
+python examples/02_functional_api.py
+```
 
-# Example 3: Production (persistence, human-in-loop, RAG)
-python examples/03_production.py
+Example 3 is a client for a local LangGraph server, so start the server first in a second terminal:
+
+```bash
+pip install -U "langgraph-cli[inmem]"
+cd my-agent-app
+pip install -e .
+# add OPENAI_API_KEY=... to my-agent-app/.env
+langgraph dev            # serves the "agent" graph on http://localhost:2024
+```
+
+Then, back in `langgraph-course/`:
+
+```bash
+python examples/03_local_test.py
 ```
 
 ## What Just Happened?
 
-### 01_basics.py
+### 01_graph_api_basics.py
 You learned:
-- ✓ How to build graphs with nodes and edges
-- ✓ State management with reducers
-- ✓ Conditional routing
-- ✓ Loops
+- ✓ State with TypedDict and Annotated reducers
+- ✓ Nodes, edges and conditional routing
+- ✓ An agent loop that calls tools
 
-### 02_agents.py
+### 02_functional_api.py
 You learned:
-- ✓ Agents with tools (calculator, weather)
-- ✓ Multi-agent systems (researcher + writer)
-- ✓ Agent coordination
+- ✓ @task and @entrypoint
+- ✓ Agent loops in plain Python
+- ✓ Streaming execution
 
-### 03_production.py
+### 03_local_test.py
 You learned:
-- ✓ Persistence (save/resume conversations)
-- ✓ Human-in-the-loop approval
-- ✓ RAG with vector search
+- ✓ Running a graph behind `langgraph dev`
+- ✓ Streaming a run from the Python SDK (`langgraph_sdk.get_client`)
 
 ## Course Structure
 
 Only **3 files** to master LangGraph:
 
-1. **01_basics.py** - Foundation (15-20 min) ⭐
-2. **02_agents.py** - Agents (20-30 min) ⭐⭐
-3. **03_production.py** - Production (30-40 min) ⭐⭐⭐
+1. **01_graph_api_basics.py** - Graph API (15-20 min) ⭐
+2. **02_functional_api.py** - Functional API (15-20 min) ⭐⭐
+3. **03_local_test.py** - Local server client (20-30 min) ⭐⭐⭐
 
 **Total time**: 1-2 hours
 
@@ -105,4 +116,4 @@ After completing all 3 examples:
 - [LangGraph Docs](https://langchain-ai.github.io/langgraph/)
 - [GitHub Issues](https://github.com/langchain-ai/langgraph/issues)
 
-**Ready? Start with `examples/01_basics.py`!** 🚀
+**Ready? Start with `examples/01_graph_api_basics.py`!** 🚀
