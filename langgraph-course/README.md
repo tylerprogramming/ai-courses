@@ -36,8 +36,10 @@ Based on the official LangGraph quickstart documentation.
 
 *Time: 15-20 minutes*
 
-### **03_local_server_setup.py** ⭐⭐⭐
+### **03_local_test.py** ⭐⭐⭐
 **Local Server (Production Preview)**
+
+A client for a running `langgraph dev` server. Start `my-agent-app/` first (see [LangGraph Local Server](#langgraph-local-server-production-preview)), then run this script.
 - Run graphs as web API
 - Visual debugging with Studio UI
 - Persistent conversations
@@ -65,7 +67,11 @@ cp .env.example .env
 # 5. Run examples in order
 python examples/01_graph_api_basics.py
 python examples/02_functional_api.py
-python examples/03_local_server_setup.py
+
+# 6. Example 3 talks to a local server. In a second terminal:
+#    cd my-agent-app && pip install -e . && langgraph dev
+#    (needs: pip install -U "langgraph-cli[inmem]", and my-agent-app/.env with OPENAI_API_KEY)
+python examples/03_local_test.py
 ```
 
 The examples and `my-agent-app` use `gpt-5.4-mini`. They previously used `gpt-4o-mini`, which OpenAI removes from the API on January 14, 2027 ([deprecations](https://developers.openai.com/api/docs/deprecations)). GPT-5 models only accept the default temperature, so the code no longer sets one.
@@ -343,7 +349,7 @@ def agent(input):
 - ✓ Stream agent execution
 - ✓ Simplify agent code
 
-**03_local_server_setup.py:**
+**03_local_test.py:**
 - ✓ Run graphs as web API
 - ✓ Visual debugging with Studio
 - ✓ Persistent conversations
