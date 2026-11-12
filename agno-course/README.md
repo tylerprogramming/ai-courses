@@ -43,7 +43,16 @@ All lessons use `gpt-5.4-mini`. The course was written with `gpt-4o-mini` and `g
 
 ## Course Structure
 
-This crash course covers everything you need to get started with Agno in 6 lessons:
+This crash course covers everything you need to get started with Agno in 6 lessons. Five of them have a lesson file:
+
+| Lesson | File |
+|---|---|
+| 1. Basic Agent Fundamentals | `01_basic_agent.py` |
+| 2. Agents with Tools | `02_agents_with_tools.py` |
+| 3. Multi-Agent Teams | `03_multi_agent_teams.py` |
+| 4. Memory and Storage | `04_memory_storage.py` |
+| 5. Structured Output | no file; the example below is the whole lesson |
+| 6. AgentOS Deployment | `05_agentos_fastapi.py` |
 
 ### Lesson 1: Basic Agent Fundamentals
 **File:** `01_basic_agent.py`
@@ -239,7 +248,7 @@ response2 = agent.run("What do I love?", user_id="alice")  # Remembers!
 - Consider implementing memory pruning for long conversations
 
 ### Lesson 5: Structured Output
-**File:** `05_structured_output.py`
+**File:** none. This lesson has no script in the folder; copy the example below into a file to try it.
 
 Get type-safe, validated responses using Pydantic:
 
@@ -300,7 +309,7 @@ print(f"{movie.title} ({movie.year}) - {movie.rating}/10")
 - Analytics results
 
 ### Lesson 6: AgentOS Deployment
-**File:** `06_agentos_fastapi.py`
+**File:** `05_agentos_fastapi.py`
 
 Deploy your agents as production web services with AgentOS:
 
@@ -341,7 +350,7 @@ app = agent_os.get_app()
 
 if __name__ == "__main__":
     agent_os.serve(
-        app="06_agentos_fastapi:app",
+        app="05_agentos_fastapi:app",
         host="0.0.0.0",
         port=7777,  # Default AgentOS port
         reload=True
@@ -350,8 +359,10 @@ if __name__ == "__main__":
 
 **Running the Server:**
 ```bash
-python 06_agentos_fastapi.py
+python 05_agentos_fastapi.py
 ```
+
+`05_agentos_fastapi.py` serves the research team (`team_os`). Switch the `app = ...` line to `simple_os` or `research_os` to serve a single agent instead.
 
 **Built-in API Endpoints:**
 
@@ -490,7 +501,7 @@ print(f"Agent metrics: {metrics}")
    ```bash
    pip install gunicorn
    
-   gunicorn 06_agentos_fastapi:app \
+   gunicorn 05_agentos_fastapi:app \
      --workers 4 \
      --worker-class uvicorn.workers.UvicornWorker \
      --bind 0.0.0.0:7777 \
@@ -540,10 +551,9 @@ python 01_basic_agent.py
 python 02_agents_with_tools.py
 python 03_multi_agent_teams.py
 python 04_memory_storage.py
-python 05_structured_output.py
 
-# Run the FastAPI server
-python 06_agentos_fastapi.py
+# Run the FastAPI server (lesson 6)
+python 05_agentos_fastapi.py
 ```
 
 ## Next Steps

@@ -3,7 +3,7 @@ Agno Framework - Lesson 6: AgentOS Deployment
 
 Deploy agents as production web services with AgentOS.
 
-To run: python 06_agentos_fastapi.py
+To run: python 05_agentos_fastapi.py
 Then visit: http://localhost:7777/docs
 """
 
