@@ -43,7 +43,16 @@ All lessons use `gpt-5.4-mini`. The course was written with `gpt-4o-mini` and `g
 
 ## Course Structure
 
-This crash course covers everything you need to get started with Agno in 6 lessons:
+This crash course covers everything you need to get started with Agno in 6 lessons. Five of them have a lesson file:
+
+| Lesson | File |
+|---|---|
+| 1. Basic Agent Fundamentals | `01_basic_agent.py` |
+| 2. Agents with Tools | `02_agents_with_tools.py` |
+| 3. Multi-Agent Teams | `03_multi_agent_teams.py` |
+| 4. Memory and Storage | `04_memory_storage.py` |
+| 5. Structured Output | no file; the example below is the whole lesson |
+| 6. AgentOS Deployment | `05_agentos_fastapi.py` |
 
 ### Lesson 1: Basic Agent Fundamentals
 **File:** `01_basic_agent.py`
@@ -135,7 +144,7 @@ Create teams of specialized agents that collaborate:
 - `Team` class coordinates multiple agents
 - Each agent can have different tools and models
 - `role` parameter defines agent specialization
-- `show_work=True` reveals collaboration process
+- `members=[...]` lists the agents on the team
 - Agents share context and build on each other's work
 
 **Example:**
@@ -164,9 +173,8 @@ writer = Agent(
 
 team = Team(
     name="ResearchTeam",
-    agents=[researcher, analyst, writer],
+    members=[researcher, analyst, writer],
     instructions=["Work together to create comprehensive reports."],
-    show_work=True
 )
 
 response = team.run("Research Tesla")
@@ -239,7 +247,7 @@ response2 = agent.run("What do I love?", user_id="alice")  # Remembers!
 - Consider implementing memory pruning for long conversations
 
 ### Lesson 5: Structured Output
-**File:** `05_structured_output.py`
+**File:** none. This lesson has no script in the folder; copy the example below into a file to try it.
 
 Get type-safe, validated responses using Pydantic:
 
@@ -249,7 +257,8 @@ Get type-safe, validated responses using Pydantic:
 - **Production Integration**: Direct database/API integration
 
 **Key Concepts:**
-- `response_model` parameter accepts Pydantic models
+- `output_schema` parameter accepts Pydantic models (Agno 1.x called it `response_model`)
+- The parsed model is on `response.content`; `agent.run()` returns a `RunOutput`
 - Field descriptions guide the LLM
 - Automatic type validation and error handling
 - Support for nested models and lists
@@ -259,6 +268,8 @@ Get type-safe, validated responses using Pydantic:
 ```python
 from pydantic import BaseModel, Field
 from typing import List
+from agno.agent import Agent
+from agno.models.openai import OpenAIChat
 
 class MovieRecommendation(BaseModel):
     title: str = Field(..., description="Movie title")
@@ -268,10 +279,11 @@ class MovieRecommendation(BaseModel):
     reason: str = Field(..., description="Why this movie is recommended")
 
 agent = Agent(
-    response_model=MovieRecommendation
+    model=OpenAIChat(id="gpt-5.4-mini"),
+    output_schema=MovieRecommendation,
 )
 
-movie = agent.run("Recommend a sci-fi movie")
+movie = agent.run("Recommend a sci-fi movie").content
 print(f"{movie.title} ({movie.year}) - {movie.rating}/10")
 ```
 
@@ -300,7 +312,7 @@ print(f"{movie.title} ({movie.year}) - {movie.rating}/10")
 - Analytics results
 
 ### Lesson 6: AgentOS Deployment
-**File:** `06_agentos_fastapi.py`
+**File:** `05_agentos_fastapi.py`
 
 Deploy your agents as production web services with AgentOS:
 
@@ -321,10 +333,12 @@ Deploy your agents as production web services with AgentOS:
 from agno.os import AgentOS
 from agno.agent import Agent
 from agno.db.sqlite import SqliteDb
+from agno.models.openai import OpenAIChat
 
 agent = Agent(
     name="Assistant",
-    agent_id="assistant",
+    id="assistant",  # optional; defaults to the name lowercased with dashes
+    model=OpenAIChat(id="gpt-5.4-mini"),
     db=SqliteDb(session_table="sessions", db_file="agent.db"),
     add_history_to_context=True
 )
@@ -341,7 +355,7 @@ app = agent_os.get_app()
 
 if __name__ == "__main__":
     agent_os.serve(
-        app="06_agentos_fastapi:app",
+        app="05_agentos_fastapi:app",
         host="0.0.0.0",
         port=7777,  # Default AgentOS port
         reload=True
@@ -350,8 +364,10 @@ if __name__ == "__main__":
 
 **Running the Server:**
 ```bash
-python 06_agentos_fastapi.py
+python 05_agentos_fastapi.py
 ```
+
+`05_agentos_fastapi.py` serves the research team (`team_os`). Switch the `app = ...` line to `simple_os` or `research_os` to serve a single agent instead.
 
 **Built-in API Endpoints:**
 
@@ -362,15 +378,19 @@ AgentOS automatically generates RESTful endpoints for all your agents, teams, an
 | `/docs` | GET | Interactive OpenAPI documentation |
 | `/redoc` | GET | Alternative API documentation |
 | `/health` | GET | Service health check |
-| `/agents/{agent_id}/run` | POST | Execute an agent |
-| `/teams/{team_id}/run` | POST | Execute a team |
-| `/workflows/{workflow_id}/run` | POST | Execute a workflow |
-| `/sessions` | GET | List all sessions |
-| `/sessions/{id}` | GET | Get specific session |
-| `/memory` | GET | Get user memories |
-| `/metrics` | GET | Get performance metrics |
+| `/agents` | GET | List agents and their ids |
+| `/agents/{agent_id}/runs` | POST | Execute an agent |
+| `/teams` | GET | List teams and their ids |
+| `/teams/{team_id}/runs` | POST | Execute a team |
+| `/workflows/{workflow_id}/runs` | POST | Execute a workflow |
+| `/sessions` | GET | List sessions (paginated, under `data`) |
+| `/sessions/{session_id}` | GET | Get specific session |
+| `/memories` | GET | Get user memories |
+| `/metrics` | GET | Get usage metrics |
 
-All endpoints support filtering by `user_id`, `session_id`, and other parameters.
+Run endpoints take **form fields** (`message`, `stream`, `session_id`, `user_id`), not a JSON body. Pass `stream=false` to get one JSON response; recent Agno versions stream Server-Sent Events by default.
+
+An agent's id is its `id=` argument, or else its `name` lowercased (`SimpleAssistant` becomes `simpleassistant`). A team without an explicit `id=` gets a generated one, so read it from `GET /teams`.
 
 **Using the API:**
 
@@ -379,28 +399,22 @@ All endpoints support filtering by `user_id`, `session_id`, and other parameters
 curl http://localhost:7777/health
 
 # Run an agent (creates new session)
-curl -X POST http://localhost:7777/agents/SimpleAssistant/run \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "What is AI?",
-    "user_id": "alice"
-  }'
+curl -X POST http://localhost:7777/agents/simpleassistant/runs \
+  -F "message=What is AI?" \
+  -F "user_id=alice" \
+  -F "stream=false"
 
-# Continue conversation (use returned session_id)
-curl -X POST http://localhost:7777/agents/SimpleAssistant/run \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "Tell me more",
-    "session_id": "abc-123",
-    "user_id": "alice"
-  }'
+# Continue conversation (use the session_id from the first response)
+curl -X POST http://localhost:7777/agents/simpleassistant/runs \
+  -F "message=Tell me more" \
+  -F "session_id=abc-123" \
+  -F "user_id=alice" \
+  -F "stream=false"
 
-# Run a team
-curl -X POST http://localhost:7777/teams/ResearchTeam/run \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "Research Tesla stock and recent news"
-  }'
+# Run a team (get <team_id> from: curl http://localhost:7777/teams)
+curl -X POST http://localhost:7777/teams/<team_id>/runs \
+  -F "message=Research Tesla stock and recent news" \
+  -F "stream=false"
 
 # Get all sessions for a user
 curl "http://localhost:7777/sessions?user_id=alice"
@@ -409,10 +423,10 @@ curl "http://localhost:7777/sessions?user_id=alice"
 curl "http://localhost:7777/sessions/abc-123"
 
 # Get user memory
-curl "http://localhost:7777/memory?user_id=alice"
+curl "http://localhost:7777/memories?user_id=alice"
 
-# Get agent performance metrics
-curl "http://localhost:7777/metrics?agent_id=SimpleAssistant"
+# Get usage metrics
+curl "http://localhost:7777/metrics"
 ```
 
 **Python Client Example:**
@@ -424,10 +438,11 @@ BASE_URL = "http://localhost:7777"
 
 # Start a conversation
 response = requests.post(
-    f"{BASE_URL}/agents/ResearchAssistant/run",
-    json={
+    f"{BASE_URL}/agents/researchassistant/runs",
+    data={
         "message": "What is the current price of AAPL?",
-        "user_id": "alice"
+        "user_id": "alice",
+        "stream": "false",
     }
 )
 
@@ -437,11 +452,12 @@ session_id = result['session_id']  # Save for next message
 
 # Continue the conversation
 response = requests.post(
-    f"{BASE_URL}/agents/ResearchAssistant/run",
-    json={
+    f"{BASE_URL}/agents/researchassistant/runs",
+    data={
         "message": "What about Tesla?",
         "session_id": session_id,  # Same session
-        "user_id": "alice"
+        "user_id": "alice",
+        "stream": "false",
     }
 )
 print(f"Response: {response.json()['content']}")
@@ -452,15 +468,12 @@ sessions = requests.get(
     params={"user_id": "alice"}
 ).json()
 
-print(f"User has {len(sessions)} sessions")
+print(f"User has {len(sessions['data'])} sessions on this page")
 
-# Get agent metrics
-metrics = requests.get(
-    f"{BASE_URL}/metrics",
-    params={"agent_id": "ResearchAssistant"}
-).json()
+# Get usage metrics
+metrics = requests.get(f"{BASE_URL}/metrics").json()
 
-print(f"Agent metrics: {metrics}")
+print(f"Metrics: {metrics}")
 ```
 
 **Production Deployment Checklist:**
@@ -469,12 +482,9 @@ print(f"Agent metrics: {metrics}")
    ```python
    from agno.db.postgres import PostgresDb
    
+   # needs: pip install "agno[postgres]"  (psycopg 3 + SQLAlchemy)
    db = PostgresDb(
-       host="localhost",
-       port=5432,
-       user="agno_user",
-       password="secure_password",
-       database="agno_prod",
+       db_url="postgresql+psycopg://agno_user:secure_password@localhost:5432/agno_prod",
        session_table="sessions"
    )
    ```
@@ -490,7 +500,7 @@ print(f"Agent metrics: {metrics}")
    ```bash
    pip install gunicorn
    
-   gunicorn 06_agentos_fastapi:app \
+   gunicorn 05_agentos_fastapi:app \
      --workers 4 \
      --worker-class uvicorn.workers.UvicornWorker \
      --bind 0.0.0.0:7777 \
@@ -540,10 +550,9 @@ python 01_basic_agent.py
 python 02_agents_with_tools.py
 python 03_multi_agent_teams.py
 python 04_memory_storage.py
-python 05_structured_output.py
 
-# Run the FastAPI server
-python 06_agentos_fastapi.py
+# Run the FastAPI server (lesson 6)
+python 05_agentos_fastapi.py
 ```
 
 ## Next Steps
@@ -623,7 +632,7 @@ After completing this crash course, you can:
 - Use session memory for simple apps
 - SQLite for single-server production
 - PostgreSQL for distributed systems
-- Configure `num_history_responses` appropriately
+- Configure `num_history_runs` appropriately
 - Implement user_id for multi-tenant apps
 
 ### Production Deployment
