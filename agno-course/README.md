@@ -378,15 +378,19 @@ AgentOS automatically generates RESTful endpoints for all your agents, teams, an
 | `/docs` | GET | Interactive OpenAPI documentation |
 | `/redoc` | GET | Alternative API documentation |
 | `/health` | GET | Service health check |
-| `/agents/{agent_id}/run` | POST | Execute an agent |
-| `/teams/{team_id}/run` | POST | Execute a team |
-| `/workflows/{workflow_id}/run` | POST | Execute a workflow |
-| `/sessions` | GET | List all sessions |
-| `/sessions/{id}` | GET | Get specific session |
-| `/memory` | GET | Get user memories |
-| `/metrics` | GET | Get performance metrics |
+| `/agents` | GET | List agents and their ids |
+| `/agents/{agent_id}/runs` | POST | Execute an agent |
+| `/teams` | GET | List teams and their ids |
+| `/teams/{team_id}/runs` | POST | Execute a team |
+| `/workflows/{workflow_id}/runs` | POST | Execute a workflow |
+| `/sessions` | GET | List sessions (paginated, under `data`) |
+| `/sessions/{session_id}` | GET | Get specific session |
+| `/memories` | GET | Get user memories |
+| `/metrics` | GET | Get usage metrics |
 
-All endpoints support filtering by `user_id`, `session_id`, and other parameters.
+Run endpoints take **form fields** (`message`, `stream`, `session_id`, `user_id`), not a JSON body. Pass `stream=false` to get one JSON response; recent Agno versions stream Server-Sent Events by default.
+
+An agent's id is its `id=` argument, or else its `name` lowercased (`SimpleAssistant` becomes `simpleassistant`). A team without an explicit `id=` gets a generated one, so read it from `GET /teams`.
 
 **Using the API:**
 
@@ -395,28 +399,22 @@ All endpoints support filtering by `user_id`, `session_id`, and other parameters
 curl http://localhost:7777/health
 
 # Run an agent (creates new session)
-curl -X POST http://localhost:7777/agents/SimpleAssistant/run \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "What is AI?",
-    "user_id": "alice"
-  }'
+curl -X POST http://localhost:7777/agents/simpleassistant/runs \
+  -F "message=What is AI?" \
+  -F "user_id=alice" \
+  -F "stream=false"
 
-# Continue conversation (use returned session_id)
-curl -X POST http://localhost:7777/agents/SimpleAssistant/run \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "Tell me more",
-    "session_id": "abc-123",
-    "user_id": "alice"
-  }'
+# Continue conversation (use the session_id from the first response)
+curl -X POST http://localhost:7777/agents/simpleassistant/runs \
+  -F "message=Tell me more" \
+  -F "session_id=abc-123" \
+  -F "user_id=alice" \
+  -F "stream=false"
 
-# Run a team
-curl -X POST http://localhost:7777/teams/ResearchTeam/run \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "Research Tesla stock and recent news"
-  }'
+# Run a team (get <team_id> from: curl http://localhost:7777/teams)
+curl -X POST http://localhost:7777/teams/<team_id>/runs \
+  -F "message=Research Tesla stock and recent news" \
+  -F "stream=false"
 
 # Get all sessions for a user
 curl "http://localhost:7777/sessions?user_id=alice"
@@ -425,10 +423,10 @@ curl "http://localhost:7777/sessions?user_id=alice"
 curl "http://localhost:7777/sessions/abc-123"
 
 # Get user memory
-curl "http://localhost:7777/memory?user_id=alice"
+curl "http://localhost:7777/memories?user_id=alice"
 
-# Get agent performance metrics
-curl "http://localhost:7777/metrics?agent_id=SimpleAssistant"
+# Get usage metrics
+curl "http://localhost:7777/metrics"
 ```
 
 **Python Client Example:**
@@ -440,10 +438,11 @@ BASE_URL = "http://localhost:7777"
 
 # Start a conversation
 response = requests.post(
-    f"{BASE_URL}/agents/ResearchAssistant/run",
-    json={
+    f"{BASE_URL}/agents/researchassistant/runs",
+    data={
         "message": "What is the current price of AAPL?",
-        "user_id": "alice"
+        "user_id": "alice",
+        "stream": "false",
     }
 )
 
@@ -453,11 +452,12 @@ session_id = result['session_id']  # Save for next message
 
 # Continue the conversation
 response = requests.post(
-    f"{BASE_URL}/agents/ResearchAssistant/run",
-    json={
+    f"{BASE_URL}/agents/researchassistant/runs",
+    data={
         "message": "What about Tesla?",
         "session_id": session_id,  # Same session
-        "user_id": "alice"
+        "user_id": "alice",
+        "stream": "false",
     }
 )
 print(f"Response: {response.json()['content']}")
@@ -468,15 +468,12 @@ sessions = requests.get(
     params={"user_id": "alice"}
 ).json()
 
-print(f"User has {len(sessions)} sessions")
+print(f"User has {len(sessions['data'])} sessions on this page")
 
-# Get agent metrics
-metrics = requests.get(
-    f"{BASE_URL}/metrics",
-    params={"agent_id": "ResearchAssistant"}
-).json()
+# Get usage metrics
+metrics = requests.get(f"{BASE_URL}/metrics").json()
 
-print(f"Agent metrics: {metrics}")
+print(f"Metrics: {metrics}")
 ```
 
 **Production Deployment Checklist:**
