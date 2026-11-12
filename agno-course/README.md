@@ -144,7 +144,7 @@ Create teams of specialized agents that collaborate:
 - `Team` class coordinates multiple agents
 - Each agent can have different tools and models
 - `role` parameter defines agent specialization
-- `show_work=True` reveals collaboration process
+- `members=[...]` lists the agents on the team
 - Agents share context and build on each other's work
 
 **Example:**
@@ -173,9 +173,8 @@ writer = Agent(
 
 team = Team(
     name="ResearchTeam",
-    agents=[researcher, analyst, writer],
+    members=[researcher, analyst, writer],
     instructions=["Work together to create comprehensive reports."],
-    show_work=True
 )
 
 response = team.run("Research Tesla")
@@ -258,7 +257,8 @@ Get type-safe, validated responses using Pydantic:
 - **Production Integration**: Direct database/API integration
 
 **Key Concepts:**
-- `response_model` parameter accepts Pydantic models
+- `output_schema` parameter accepts Pydantic models (Agno 1.x called it `response_model`)
+- The parsed model is on `response.content`; `agent.run()` returns a `RunOutput`
 - Field descriptions guide the LLM
 - Automatic type validation and error handling
 - Support for nested models and lists
@@ -268,6 +268,8 @@ Get type-safe, validated responses using Pydantic:
 ```python
 from pydantic import BaseModel, Field
 from typing import List
+from agno.agent import Agent
+from agno.models.openai import OpenAIChat
 
 class MovieRecommendation(BaseModel):
     title: str = Field(..., description="Movie title")
@@ -277,10 +279,11 @@ class MovieRecommendation(BaseModel):
     reason: str = Field(..., description="Why this movie is recommended")
 
 agent = Agent(
-    response_model=MovieRecommendation
+    model=OpenAIChat(id="gpt-5.4-mini"),
+    output_schema=MovieRecommendation,
 )
 
-movie = agent.run("Recommend a sci-fi movie")
+movie = agent.run("Recommend a sci-fi movie").content
 print(f"{movie.title} ({movie.year}) - {movie.rating}/10")
 ```
 
@@ -330,10 +333,12 @@ Deploy your agents as production web services with AgentOS:
 from agno.os import AgentOS
 from agno.agent import Agent
 from agno.db.sqlite import SqliteDb
+from agno.models.openai import OpenAIChat
 
 agent = Agent(
     name="Assistant",
-    agent_id="assistant",
+    id="assistant",  # optional; defaults to the name lowercased with dashes
+    model=OpenAIChat(id="gpt-5.4-mini"),
     db=SqliteDb(session_table="sessions", db_file="agent.db"),
     add_history_to_context=True
 )
@@ -480,12 +485,9 @@ print(f"Agent metrics: {metrics}")
    ```python
    from agno.db.postgres import PostgresDb
    
+   # needs: pip install "agno[postgres]"  (psycopg 3 + SQLAlchemy)
    db = PostgresDb(
-       host="localhost",
-       port=5432,
-       user="agno_user",
-       password="secure_password",
-       database="agno_prod",
+       db_url="postgresql+psycopg://agno_user:secure_password@localhost:5432/agno_prod",
        session_table="sessions"
    )
    ```
@@ -633,7 +635,7 @@ After completing this crash course, you can:
 - Use session memory for simple apps
 - SQLite for single-server production
 - PostgreSQL for distributed systems
-- Configure `num_history_responses` appropriately
+- Configure `num_history_runs` appropriately
 - Implement user_id for multi-tenant apps
 
 ### Production Deployment
