@@ -50,7 +50,7 @@ set OPENAI_API_KEY=your-key-here
 
 ```bash
 # Start with the basics
-python examples/01_setup.py
+python examples/01_agent_basics.py
 ```
 
 If you see output without errors, you're all set! 🎉
@@ -60,18 +60,13 @@ If you see output without errors, you're all set! 🎉
 Work through the examples in order:
 
 ```bash
-python examples/01_setup.py              # Setup and installation
-python examples/02_lcel_basics.py        # LCEL (modern chains)
-python examples/03_tool_calling.py       # Tools and functions
-python examples/04_prompts_templates.py  # Prompt engineering
-python examples/05_agents.py             # ReAct agents
-python examples/06_memory.py             # Conversation memory
-python examples/07_chatbot.py            # Complete chatbot
-python examples/08_document_loaders.py   # Loading documents
-python examples/09_text_splitters.py     # Chunking text
-python examples/10_vector_stores.py      # Semantic search
-python examples/11_rag_system.py         # Complete RAG system
+python examples/01_agent_basics.py            # create_agent with a tool
+python examples/02_agent_structured_output.py # Structured output
+python examples/03_agent_middleware.py        # Middleware (summarization)
+python examples/04_agents_with_memory.py      # Memory with a checkpointer
 ```
+
+`examples/05_agents_advanced.py` is a sub-agent pattern sketch with placeholder model and tools; fill them in before running it.
 
 Each example is self-contained and includes explanations!
 
