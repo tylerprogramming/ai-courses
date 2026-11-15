@@ -3,10 +3,26 @@
 ## Table of Contents
 
 - [What is Arcade.dev?](#what-is-arcadedev)
+- [Files in this folder](#files-in-this-folder)
 - [Step 1: Arcade's Hosted Tools Quickstart](#step-1-arcades-hosted-tools-quickstart)
-- [Step 2: Build MCP Server](#step-2-build-mcp-server-01_framework_toolpy)
-- [Step 3: MCP Toolkit](#step-3-mcp-toolkit-02_mcp_toolkitpy)
-- [Step 4: MCP Gateways](#step-4-mcp-gateways-03_crewai_mcp_gatewaypy)
+- [Step 2: Build MCP Server](#step-2-build-mcp-server-mcp_server)
+- [Step 3: MCP Toolkit](#step-3-mcp-toolkit-03_mcp_toolkitpy)
+- [Step 4: MCP Gateways](#step-4-mcp-gateways-04_crewai_mcp_gatewaypy)
+
+---
+
+## Files in this folder
+
+| Step | File | What it is |
+| --- | --- | --- |
+| 1 | `00_simple_tool_call.py` | The `Math.Sqrt` half of the Step 1 `example.py` |
+| 1 | `01_simple_auth_tool.py` | The `GitHub.SetStarred` (authorized tool) half of the Step 1 `example.py` |
+| - | `02_framework_tool.py` | CrewAI agent with Arcade Gmail tools via the deprecated `crewai-arcade` (see `README.md`) |
+| 2 | `mcp_server/` | The `arcade new my_server` scaffold from Step 2, checked in as `mcp_server/` |
+| 3 | `03_mcp_toolkit.py` | OpenAI Agents SDK agent with the Arcade Gmail toolkit |
+| 4 | `04_crewai_mcp_gateway.py` | CrewAI agent that reaches Gmail through an Arcade MCP Gateway |
+
+Install commands per script are in `README.md`.
 
 ---
 
@@ -270,7 +286,7 @@ Expected output:
 ```
 
 
-## Step 2: Build MCP Server (`01_framework_tool.py`)
+## Step 2: Build MCP Server (`mcp_server/`)
 
 Creating an MCP server, configuring it for Cursor, and demonstrating usage with agents.
 
@@ -418,13 +434,13 @@ Ensure you run `arcade login` and follow the instructions in your browser to con
 Ensure you have set the environment variable in your terminal or `.env` file, and that it matches the secret key defined in the `@app.tool` decorator. If you are using the stdio transport, then ensure the environment variable is set in the MCP client's configuration file.
 
 
-## Step 3: MCP Toolkit (`02_mcp_toolkit.py`)
+## Step 3: MCP Toolkit (`03_mcp_toolkit.py`)
 
 Look for any toolkit, and you can add it in this example with authorization.
 
 ---
 
-## Step 4: MCP Gateways (`03_crewai_mcp_gateway.py`)
+## Step 4: MCP Gateways (`04_crewai_mcp_gateway.py`)
 
 ### Overview
 
