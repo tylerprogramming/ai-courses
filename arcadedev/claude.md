@@ -279,6 +279,11 @@ print(response.output.value)
 uv run example.py
 ```
 
+In this folder the same code is split in two and reads `ARCADE_API_KEY` from
+`.env` instead of an inline key: `00_simple_tool_call.py` (`Math.Sqrt`) and
+`01_simple_auth_tool.py` (`GitHub.SetStarred`). Replace the hardcoded
+`user_id` with your own Arcade user id first.
+
 Expected output:
 ```
 > The square root of 625 is 25
@@ -328,6 +333,10 @@ In your terminal, run the following command to scaffold a new MCP Server called 
 arcade new my_server
 cd my_server/src/my_server
 ```
+
+In this folder the generated project is already checked in as `mcp_server/`
+(same `src/my_server/` layout), so you can skip `arcade new` and run
+`cd mcp_server/src/my_server` instead.
 
 This generates a Python module with the following structure:
 
